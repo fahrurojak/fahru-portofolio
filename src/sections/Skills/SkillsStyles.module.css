@@ -1,7 +1,15 @@
+:root {
+  --text-color: #333;
+  --primary-color: #6200ea;
+  --secondary-color: #03dac6;
+  --spacing: 10px;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding: var(--spacing);
 
   span {
     display: flex;
@@ -11,16 +19,24 @@
 
   img {
     width: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  img:hover {
+    transform: scale(1.2);
   }
 }
 
 .skillList {
   display: flex;
-  justify-content: space-evenly;
-  align-self: center;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  gap: 20px;
   row-gap: 40px;
-  max-width: 26ch;
+  max-width: 80%;
+  margin: 0 auto;
+  transition: all 0.3s ease;
 }
 
 hr {
@@ -29,19 +45,35 @@ hr {
   border: none;
   background-color: var(--text-color);
   margin: 30px auto;
+  transition: width 0.3s ease;
 }
 
-@media (width >= 800px) {
+@media (min-width: 800px) {
   .skillList {
-    max-width: fit-content;
+    max-width: 60%;
     gap: 30px;
 
     p {
-      font-size: 20px;
+      font-size: 1.25rem;
     }
   }
 
   hr {
     width: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .skillList {
+    max-width: 50%;
+    gap: 40px;
+
+    p {
+      font-size: 1.5rem;
+    }
+  }
+
+  hr {
+    width: 500px;
   }
 }
