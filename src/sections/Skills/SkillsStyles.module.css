@@ -41,7 +41,7 @@
 
 hr {
   width: 100px;
-  height: 1px;
+  height: 2px;
   border: none;
   background-color: var(--text-color);
   margin: 30px auto;
