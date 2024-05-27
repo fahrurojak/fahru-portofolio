@@ -19,7 +19,7 @@ function Projects() {
         />
         <ProjectCard
           src={freshBurger}
-          link="https://github.com/Ade-mir/company-landing-page-2"
+          link="https://book-shelf-fahrurojaks-projects.vercel.app/"
           h3="Bookshelf"
           p="Save book history app"
         />
