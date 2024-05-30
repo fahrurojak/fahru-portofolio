@@ -1,9 +1,10 @@
 import styles from './ProjectsStyles.module.css';
 import viberr from '../../assets/viberr.png';
-import freshBurger from '../../assets/fresh-burger.png';
 import hipsster from '../../assets/hipsster.png';
-import minds from '../../assets/fitlift.png';
 import property from '../../assets/property.png';
+import book from '../../assets/book.png';
+import minds from '../../assets/minds.png';
+import chatdoc from '../../assets/chatdoc.png';
 import ProjectCard from '../../common/ProjectCard';
 
 function Projects() {
@@ -18,7 +19,7 @@ function Projects() {
           p="Landing Page React"
         />
         <ProjectCard
-          src={freshBurger}
+          src={book}
           link="https://book-shelf-fahrurojaks-projects.vercel.app/"
           h3="Bookshelf"
           p="Save book history app"
@@ -35,29 +36,29 @@ function Projects() {
           h3="Minds"
           p="Mental Health App"
         />
+         <ProjectCard
+          src={property}
+          link="https://minds-fahrurojaks-projects.vercel.app/"
+          h3="Minds"
+          p="Laravel"
+        />
         <ProjectCard
+          src={chatdoc}
+          link="https://minds-fahrurojaks-projects.vercel.app/"
+          h3="Chatdoc"
+          p="Project Kampus Merdeka"
+        />
+       <ProjectCard
           src={property}
           link="https://lookerstudio.google.com/reporting/611c3feb-aaea-4d6a-a843-836f731595e2/page/LQ2jD"
           h3="Newyork Sales Property"
           p="Project Kampus Merdeka"
         />
         <ProjectCard
-          src={minds}
+          src={property}
           link="https://minds-fahrurojaks-projects.vercel.app/"
           h3="Minds"
-          p=""
-        />
-        <ProjectCard
-          src={minds}
-          link="https://minds-fahrurojaks-projects.vercel.app/"
-          h3="Minds"
-          p=""
-        />
-        <ProjectCard
-          src={minds}
-          link="https://minds-fahrurojaks-projects.vercel.app/"
-          h3="Minds"
-          p=""
+          p="Myskill Project"
         />
       </div>
     </section>

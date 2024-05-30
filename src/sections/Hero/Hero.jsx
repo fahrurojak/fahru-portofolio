@@ -3,8 +3,8 @@ import styles from './HeroStyles.module.css';
 import heroImg from '../../assets/fahru.png';
 import sun from '../../assets/sun.svg';
 import moon from '../../assets/moon.svg';
-import instagramLight from '../../assets/instagram-light.svg';
-import instagramDark from '../../assets/instagram-dark.svg';
+import twitterLight from '../../assets/instagram-light.svg';
+import twitterDark from '../../assets/instagram-dark.svg';
 import githubLight from '../../assets/github-light.svg';
 import githubDark from '../../assets/github-dark.svg';
 import linkedinLight from '../../assets/linkedin-light.svg';
@@ -16,15 +16,12 @@ function Hero() {
   const { theme, toggleTheme } = useTheme();
 
   const themeIcon = theme === 'light' ? sun : moon;
-  const instagramIcon = theme === 'light' ? instagramLight : instagramDark;
+  const twitterIcon = theme === 'light' ? twitterLight : twitterDark;
   const githubIcon = theme === 'light' ? githubLight : githubDark;
   const linkedinIcon = theme === 'light' ? linkedinLight : linkedinDark;
 
   const [displayedText, setDisplayedText] = useState('');
   const fullText = "Passionate about frontend development and data analytics, I excel at creating visually appealing, user-friendly interfaces and leveraging data to enhance user experiences.";
-
-  const [flipText, setFlipText] = useState('Frontend Developer');
-  const [animationClass, setAnimationClass] = useState('');
 
   useEffect(() => {
     let index = 0;
@@ -37,17 +34,6 @@ function Hero() {
     }, 50); // Adjust typing speed here
     return () => clearInterval(timer);
   }, [fullText]);
-
-  useEffect(() => {
-    const flipInterval = setInterval(() => {
-      setAnimationClass(styles.flipOut);
-      setTimeout(() => {
-        setFlipText(prev => (prev === 'Frontend Developer' ? 'Data Enthusiast' : 'Frontend Developer'));
-        setAnimationClass(styles.flipIn);
-      }, 500); // Duration of flip-out effect
-    }, 3000); // Change every 3 seconds
-    return () => clearInterval(flipInterval);
-  }, []);
 
   return (
     <section id="hero" className={styles.container}>
@@ -70,10 +56,11 @@ function Hero() {
           <br />
           Rojak
         </h1>
-        <h2 className={`${styles.flipText} ${animationClass}`}>{flipText}</h2>
+        <h2>Frontend Developer</h2>
+        <h3>DATA ENTHUSIAST</h3>
         <span>
           <a href="https://instagram.com/fahruphoto" target="_blank" rel="noopener noreferrer">
-            <img src={instagramIcon} alt="Instagram icon" />
+            <img src={twitterIcon} alt="Twitter icon" />
           </a>
           <a href="https://github.com/fahrurojak" target="_blank" rel="noopener noreferrer">
             <img src={githubIcon} alt="Github icon" />
