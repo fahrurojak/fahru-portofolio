@@ -57,7 +57,6 @@ function Hero() {
           Rojak
         </h1>
         <h2>Frontend Developer</h2>
-        <h3>DATA ENTHUSIAST</h3>
         <span>
           <a href="https://instagram.com/fahruphoto" target="_blank" rel="noopener noreferrer">
             <img src={twitterIcon} alt="Twitter icon" />
