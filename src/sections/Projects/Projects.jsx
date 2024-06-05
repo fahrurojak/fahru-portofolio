@@ -1,9 +1,9 @@
 import styles from './ProjectsStyles.module.css';
 import viberr from '../../assets/viberr.png';
-import hipsster from '../../assets/hipsster.png';
 import property from '../../assets/property.png';
 import book from '../../assets/book.png';
 import minds from '../../assets/minds.png';
+import triftingan from '../../assets/triftingan.png';
 import chatdoc from '../../assets/chatdoc.png';
 import ProjectCard from '../../common/ProjectCard';
 
@@ -25,8 +25,8 @@ function Projects() {
           p="Save book history app"
         />
         <ProjectCard
-          src={hipsster}
-          link="https://fahrurojak.github.io/Triftingan/"
+          src={triftingan}
+          link="https://triftingan.vercel.app/"
           h3="Triftingan"
           p="Preloved Shop"
         />
