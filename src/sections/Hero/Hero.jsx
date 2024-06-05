@@ -58,13 +58,13 @@ function Hero() {
         </h1>
         <h2>Frontend Developer</h2>
         <span>
-          <a href="https://instagram.com/fahruphoto" target="_blank" rel="noopener noreferrer">
+          <a href="https://instagram.com/fahruphoto/" target="_blank" rel="noopener noreferrer">
             <img src={twitterIcon} alt="Twitter icon" />
           </a>
-          <a href="https://github.com/fahrurojak" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/fahrurojak/" target="_blank" rel="noopener noreferrer">
             <img src={githubIcon} alt="Github icon" />
           </a>
-          <a href="https://linkedin.com/fahrurojak" target="_blank" rel="noopener noreferrer">
+          <a href="https://linkedin.com/fahrurojak/" target="_blank" rel="noopener noreferrer">
             <img src={linkedinIcon} alt="Linkedin icon" />
           </a>
         </span>
