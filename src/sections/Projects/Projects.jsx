@@ -1,4 +1,5 @@
 import styles from './ProjectsStyles.module.css';
+import freshgo from '../../assets/FreshGO.png';
 import property from '../../assets/property.png';
 import book from '../../assets/book.png';
 import minds from '../../assets/minds.png';
@@ -12,10 +13,10 @@ function Projects() {
       <h1 className="sectionTitle">Projects</h1>
       <div className={styles.projectsContainer}>
         <ProjectCard
-          src={property}
+          src={freshgo}
           link="https://github.com/Ade-mir/company-landing-page-2"
-          h3="UMKM"
-          p="Landing Page React"
+          h3="FreshGO"
+          p="Fruits Shop"
         />
         <ProjectCard
           src={book}
