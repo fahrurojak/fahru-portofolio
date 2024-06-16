@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+.certificates {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #ffffff;
+}
+
+.certificates.dark-mode {
+  background-color: #222;
+}
+
+.certificates h2 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.certificates.dark-mode h2 {
+  color: #eee;
+}
+
+.certificate-card {
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  background: white;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Intensitas bayangan ditingkatkan */
+  text-align: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.certificate-card.dark-mode {
+  background: #333;
+  color: #eee;
+}
+
+.certificate-card:hover {
+  transform: scale(1.05);
+}
+
+.certificate-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.certificate-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.certificate-card.dark-mode h3 {
+  color: #fff; /* Adjust color for dark mode */
+}
+
+.certificate-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.certificate-card.dark-mode p {
+  color: #ddd; /* Adjust color for dark mode */
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.arrow-button {
+  position: relative;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background-color: #0987f2;
+  color: white;
+  border: 2px solid #004080;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 -2px 6px rgba(255, 255, 255, 0.1) inset;
+}
+
+.certificates.dark-mode .arrow-button {
+  background-color: white;
+  color: #333;
+  border: 2px solid #555;
+}
+
+.arrow-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.arrow-button:focus {
+  outline: none;
+}
+
+.arrow-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 -1px 3px rgba(255, 255, 255, 0.1) inset;
+}
+
+.arrow-button::before, .arrow-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: solid white;
+}
+
+.arrow-button::before {
+  left: 10px;
+  border-width: 0 8px 8px 0;
+  border-right: 8px solid transparent;
+}
+
+.arrow-button::after {
+  right: 10px;
+  border-width: 8px 0 0 8px;
+  border-top: 8px solid transparent;
+}
+
+.certificates.dark-mode .arrow-button::before,
+.certificates.dark-mode .arrow-button::after {
+  border-color: #333; /* Adjust arrow color for dark mode */
+}
+
+.arrow-button:hover::before, .arrow-button:hover::after {
+  border-color: lightgray;
+}
+
+.arrow-button:active::before, .arrow-button:active::after {
+  border-color: darkgray;
+}
