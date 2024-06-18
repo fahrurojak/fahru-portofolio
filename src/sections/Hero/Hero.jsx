@@ -31,7 +31,7 @@ function Hero() {
       if (index > fullText.length) {
         clearInterval(timer);
       }
-    }, 50); // Adjust typing speed here
+    }, 50); 
     return () => clearInterval(timer);
   }, [fullText]);
 
