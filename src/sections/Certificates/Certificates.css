@@ -27,7 +27,7 @@
   border-radius: 10px;
   max-width: 400px;
   background: white;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Intensitas bayangan ditingkatkan */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
   text-align: left;
   transition: transform 0.3s ease-in-out;
 }

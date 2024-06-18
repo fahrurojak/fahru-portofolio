@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Certificates.css';
 import image1 from '../../assets/msib.jpg';
-import image2 from '../../assets/msib.jpg';
+import image2 from '../../assets/dicoding.jpg';
 import image3 from '../../assets/msib.jpg';
 import image4 from '../../assets/msib.jpg';
 import image5 from '../../assets/msib.jpg';
@@ -21,8 +21,8 @@ const certificates = [
   },
   {
     id: 2,
-    title: 'Certificate 2',
-    description: 'Description 2',
+    title: 'Certificate Dicoding',
+    description: 'completed the DBS Foundation Coding Camp 2024 Beginner - Front-End Web Developer course path from Dicoding Indonesia x DBS Bank 2024.',
     image: image2,
   },
   {
