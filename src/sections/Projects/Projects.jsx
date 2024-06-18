@@ -1,5 +1,5 @@
 import styles from './ProjectsStyles.module.css';
-import freshgo from '../../assets/freshgo.png';
+import freshgo from '../../assets/FreshGO.png';
 import property from '../../assets/property.png';
 import book from '../../assets/book.png';
 import minds from '../../assets/minds.png';
