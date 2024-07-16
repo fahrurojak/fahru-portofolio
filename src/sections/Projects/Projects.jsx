@@ -5,6 +5,7 @@ import book from '../../assets/book.png';
 import minds from '../../assets/minds.png';
 import triftingan from '../../assets/triftingan.png';
 import chatdoc from '../../assets/chatdoc.png';
+import kateringgo from '../../assets/kateringgo.png';
 import ProjectCard from '../../common/ProjectCard';
 
 function Projects() {
@@ -37,10 +38,10 @@ function Projects() {
           p="Mental Health App"
         />
          <ProjectCard
-          src={property}
-          link="https://minds-fahrurojaks-projects.vercel.app/"
-          h3="Minds"
-          p="Laravel"
+          src={kateringgo}
+          link="https://katering-go.vercel.app/"
+          h3="KateringGO"
+          p="Catering App"
         />
         <ProjectCard
           src={chatdoc}
