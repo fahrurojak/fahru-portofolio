@@ -60,8 +60,8 @@
   position: absolute;
   right: 0;
   top: 15px;
-  width: 50px; /* Increased from 25px to 40px */
-  height: 40px; /* Added height to maintain aspect ratio */
+  width: 50px; 
+  height: 40px; 
 }
 
 .colorMode:hover {
@@ -97,7 +97,7 @@
       max-width: 400px;
       width: 400px;
     }
-    /* Add this at the end of your existing CSS */
+
 
 @keyframes typewriter {
   from { width: 0; }
@@ -128,11 +128,11 @@
 }
 
 .typingEffect {
-  overflow: hidden; /* Ensures the text is hidden until typed */
-  border-right: 0.15em solid black; /* Adjust cursor color */
-  white-space: nowrap; /* Keeps the text on a single line */
-  margin: 0 auto; /* Keeps the element centered */
-  letter-spacing: 0.15em; /* Adjust character spacing */
+  overflow: hidden; 
+  border-right: 0.15em solid black; 
+  white-space: nowrap; 
+  margin: 0 auto;
+  letter-spacing: 0.15em; 
   animation: typewriter 4s steps(40, end), blinkCaret 0.75s step-end infinite;
 }
 

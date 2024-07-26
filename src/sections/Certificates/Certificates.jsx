@@ -3,7 +3,7 @@ import './Certificates.css';
 import image1 from '../../assets/msib.jpg';
 import image2 from '../../assets/dicoding.jpg';
 import image3 from '../../assets/msib.jpg';
-import image4 from '../../assets/msib.jpg';
+import image4 from '../../assets/harisenin.jpg';
 import image5 from '../../assets/msib.jpg';
 import image6 from '../../assets/msib.jpg';
 import image7 from '../../assets/msib.jpg';
@@ -33,8 +33,8 @@ const certificates = [
   },
   {
     id: 4,
-    title: 'Certificate 4',
-    description: 'Description 4',
+    title: 'Certificate Harisenin',
+    description: 'Completed a 3-week bootcamp, gaining hands-on experience in front-end and back-end development. Developed a web application using HTML, JavaScript, and Tailwind CSS, enhancing my web technology skills.',
     image: image4,
   },
   {
