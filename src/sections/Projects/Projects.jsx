@@ -7,6 +7,7 @@ import triftingan from '../../assets/triftingan.png';
 import chatdoc from '../../assets/chatdoc.png';
 import kateringgo from '../../assets/kateringgo.png';
 import ProjectCard from '../../common/ProjectCard';
+import notes from '../../assets/notes.png';
 
 function Projects() {
   return (
@@ -56,10 +57,10 @@ function Projects() {
           p="Project Kampus Merdeka"
         />
         <ProjectCard
-          src={property}
-          link="https://minds-fahrurojaks-projects.vercel.app/"
-          h3="Minds"
-          p="Myskill Project"
+          src={notes}
+          link="https://notes-app-fahrurojaks-projects.vercel.app/"
+          h3="Notes App"
+          p="Notes App"
         />
       </div>
     </section>

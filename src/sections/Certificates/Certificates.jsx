@@ -4,7 +4,7 @@ import image1 from '../../assets/msib.jpg';
 import image2 from '../../assets/dicoding.jpg';
 import image3 from '../../assets/msib.jpg';
 import image4 from '../../assets/harisenin.jpg';
-import image5 from '../../assets/msib.jpg';
+import image5 from '../../assets/vsga.jpg';
 import image6 from '../../assets/msib.jpg';
 import image7 from '../../assets/msib.jpg';
 import image8 from '../../assets/msib.jpg';
@@ -27,8 +27,8 @@ const certificates = [
   },
   {
     id: 3,
-    title: 'Certificate 3',
-    description: 'Description 3',
+    title: 'Certificate Dicoding',
+    description: 'completed the DBS Foundation Coding Camp 2024 Intermediate - Front-End Web Developer course path from Dicoding Indonesia x DBS Bank 2024.',
     image: image3,
   },
   {
@@ -39,8 +39,8 @@ const certificates = [
   },
   {
     id: 5,
-    title: 'Certificate 5',
-    description: 'Description 5',
+    title: 'Certificate Digitalent',
+    description: 'Junior Web Developer is one of the training schemes under the Vocational School Graduate Academy Digital Talent Scholarship 2023 Program, in partnership with Politeknik Negeri Bandung.',
     image: image5,
   },
   {
