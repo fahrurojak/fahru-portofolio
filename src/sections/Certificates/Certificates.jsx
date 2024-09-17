@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Certificates.css';
 import image1 from '../../assets/msib.jpg';
 import image2 from '../../assets/dicoding.jpg';
-import image3 from '../../assets/msib.jpg';
+import image3 from '../../assets/dicoding2.jpg';
 import image4 from '../../assets/harisenin.jpg';
 import image5 from '../../assets/vsga.jpg';
 import image6 from '../../assets/msib.jpg';
