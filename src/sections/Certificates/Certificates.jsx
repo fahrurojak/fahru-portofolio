@@ -45,7 +45,7 @@ const certificates = [
   },
   {
     id: 6,
-    title: 'Certificate 6',
+    title: 'Certificate IDcamp 2024',
     description: 'Description 6',
     image: image6,
   },
