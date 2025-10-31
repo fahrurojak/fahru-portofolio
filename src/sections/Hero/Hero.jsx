@@ -21,7 +21,7 @@ function Hero() {
   const linkedinIcon = theme === 'light' ? linkedinLight : linkedinDark;
 
   const [displayedText, setDisplayedText] = useState('');
-  const fullText = "Passionate about frontend development and data analytics, I excel at creating visually appealing, user-friendly interfaces and leveraging data to enhance user experiences.";
+  const fullText = "Passionate about software development and data analytics, I excel at creating visually appealing, user-friendly interfaces and leveraging data to enhance user experiences.";
 
   useEffect(() => {
     let index = 0;
@@ -56,7 +56,7 @@ function Hero() {
           <br />
           Rojak
         </h1>
-        <h2>Frontend Developer</h2>
+        <h2>Software Engineer | Data Enthusiast</h2>
         <span>
           <a href="https://instagram.com/fahruphoto/" target="_blank" rel="noopener noreferrer">
             <img src={twitterIcon} alt="Twitter icon" />
