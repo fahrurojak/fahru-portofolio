@@ -2,139 +2,157 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  gap: 30px;
   text-align: center;
-  height: 100dvh;
-  min-height: 500px;
-
-  .hero {
-    max-width: 150px;
-  }
-
-  span {
-    display: flex;
-    gap: 25px;
-    justify-content: center;
-
-    a {
-      margin: 0;
-
-      img {
-        width: 30px;
-      }
-    }
-  }
-
-  a {
-    width: fit-content;
-    align-self: center;
-  }
-
-  button {
-    background-color: var(--btn-color);
-    color: var(--btn-text-color);
-    border: none;
-    border-radius: 20px;
-    width: 126px;
-    height: 50px;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    transition: box-shadow 200ms ease-in-out, transform 200ms ease-in-out;
-  }
-
-  button:hover {
-    transform: scale(1.05);
-  }
-
-  button:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
-  }
+  padding: 20px 0;
 }
+
+.hero {
+  max-width: 180px;
+  border-radius: 50%; /* Give it a clean circular look if it's not already */
+}
+
 .colorModeContainer {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .colorMode {
   position: absolute;
-  right: 0;
-  top: 15px;
-  width: 50px; 
-  height: 40px; 
+  right: 10px;
+  top: 10px;
+  width: 30px; 
+  height: 30px; 
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.25);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+[data-theme='dark'] .colorMode {
+  background-color: rgba(0, 0, 0, 0.1);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 4px 10px rgba(0,0,0,0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
 }
 
 .colorMode:hover {
-  cursor: pointer;
+  transform: scale(1.1);
 }
-.description {
-  max-width: 24ch;
-  margin: 0 auto; 
-  font-size: 14px;
-}
+
 .info {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 
-@media (width >= 800px) {
+.info span {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.info span img {
+  width: 28px;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.info span img:hover {
+  opacity: 0.7;
+  transform: translateY(-2px);
+}
+
+.description {
+  max-width: 600px; /* Let it wrap nicely */
+  margin: 0 auto; 
+  line-height: 1.6;
+}
+
+.fadeIn {
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+  background: linear-gradient(135deg, var(--btn-color) 0%, #333 100%);
+  color: var(--btn-text-color);
+  border: none;
+  border-radius: 30px; /* Pill shape */
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+[data-theme='dark'] button {
+  background: linear-gradient(135deg, #fff 0%, #ccc 100%);
+  color: #000;
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] button:hover {
+  box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+@media (min-width: 800px) {
   .container {
     flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-evenly;
-
-    .hero {
-      max-width: 350px;
-      width: 350px;
-    }
+    justify-content: center;
+    gap: 80px;
+    text-align: left;
   }
-}
 
-@media (width >= 1400px) {
-  .container {
-    .hero {
-      max-width: 400px;
-      width: 400px;
-    }
+  .info {
+    align-items: flex-start;
+    max-width: 450px;
+  }
 
+  .info span {
+    justify-content: flex-start;
+  }
 
-@keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
-}
+  .description {
+    margin: 0;
+  }
 
-@keyframes blinkCaret {
-  from, to { border-color: transparent; }
-  50% { border-color: black; }
-}
-
-.typewriter {
-  overflow: hidden; /* Ensures the text is hidden until typed */
-  border-right: 0.15em solid black; /* Adjust cursor color */
-  white-space: nowrap; /* Keeps the text on a single line */
-  margin: 0 auto; /* Keeps the element centered */
-  letter-spacing: 0.15em; /* Adjust character spacing */
-  animation: blinkCaret 0.75s step-end infinite;
-}
-@keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes blinkCaret {
-  from, to { border-color: transparent; }
-  50% { border-color: black; }
-}
-
-.typingEffect {
-  overflow: hidden; 
-  border-right: 0.15em solid black; 
-  white-space: nowrap; 
-  margin: 0 auto;
-  letter-spacing: 0.15em; 
-  animation: typewriter 4s steps(40, end), blinkCaret 0.75s step-end infinite;
-}
-
+  .hero {
+    max-width: 250px;
   }
 }

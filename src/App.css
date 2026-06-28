@@ -1,34 +1,44 @@
 :root {
   --background-color: #fff;
-  --btn-color: #0987f2;
+  --btn-color: #111;
   --btn-text-color: #fff;
   --project-card-bg: #ffffff00;
-  --text-color: #222;
+  --text-color: #111;
   --form-text-color: #555;
   --footer-text-color: #888;
 }
 
 [data-theme='dark'] {
-  --background-color: #222;
+  --background-color: #111;
   --btn-color: #fff;
-  --btn-text-color: #222;
-  --project-card-bg: #fff;
+  --btn-text-color: #111;
+  --project-card-bg: #111;
   --text-color: #fff;
-  --form-text-color: #fff;
-  --footer-text-color: #bbb;
+  --form-text-color: #ccc;
+  --footer-text-color: #888;
 }
 
 body {
   background-color: var(--background-color);
-  display: flex;
-  justify-content: center;
-  margin: 0 auto 60px;
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
   display: flex;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
   flex-direction: column;
-  gap: 60px;
+  padding: 20px 20px 140px 20px; /* Padding bottom for mobile nav */
+  position: relative;
+  z-index: 10;
+  align-items: center;
 }
 
 h1,
@@ -40,34 +50,98 @@ p {
   padding: 0;
 }
 
-h2,
-h3,
-p {
-  font-family: 'Roboto Mono', monospace;
+h1, h2, h3, p {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-h1,
+h1, h2 {
+  letter-spacing: -0.5px;
+}
+
+h3, p {
+  line-height: 1.6;
+}
+
 h2 {
-  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--form-text-color);
 }
 
-h2,
 h3 {
   font-size: 20px;
+  font-weight: 600;
 }
 
 h1 {
-  font-family: 'Rubik', sans-serif;
-  font-size: 32px;
+  font-size: 36px;
+  font-weight: 800;
 }
 
 p {
-  font-size: 16px;
-  font-weight: 300;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--form-text-color);
 }
 
 .sectionTitle {
   margin-bottom: 30px;
+  text-align: center;
+}
+
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.25);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.glass-panel:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+[data-theme='dark'] .glass-panel {
+  background-color: rgba(30, 30, 30, 0.3);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .glass-panel:hover {
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .hover {
@@ -75,9 +149,10 @@ p {
 }
 
 @media (width >= 800px) {
-  #root {
-    gap: 100px;
+  .main-content {
+    padding: 40px 40px 40px 120px; /* 80px sidebar + 40px gap */
   }
+
   h1 {
     font-size: 40px;
   }
@@ -94,9 +169,6 @@ p {
   }
 
   @media (width >= 1400px) {
-    #root {
-      gap: 200px;
-    }
     h1 {
       font-size: 48px;
     }

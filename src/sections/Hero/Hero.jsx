@@ -20,23 +20,10 @@ function Hero() {
   const githubIcon = theme === 'light' ? githubLight : githubDark;
   const linkedinIcon = theme === 'light' ? linkedinLight : linkedinDark;
 
-  const [displayedText, setDisplayedText] = useState('');
   const fullText = "Passionate about software development and data analytics, I excel at creating visually appealing, user-friendly interfaces and leveraging data to enhance user experiences.";
 
-  useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      setDisplayedText(fullText.slice(0, index));
-      index += 1;
-      if (index > fullText.length) {
-        clearInterval(timer);
-      }
-    }, 50); 
-    return () => clearInterval(timer);
-  }, [fullText]);
-
   return (
-    <section id="hero" className={styles.container}>
+    <section id="hero" className={`glass-panel ${styles.container}`}>
       <div className={styles.colorModeContainer}>
         <img
           src={heroImg}
@@ -59,7 +46,7 @@ function Hero() {
         <h2>Software Engineer | Data Enthusiast</h2>
         <span>
           <a href="https://instagram.com/fahruphoto/" target="_blank" rel="noopener noreferrer">
-            <img src={twitterIcon} alt="Twitter icon" />
+            <img src={twitterIcon} alt="Instagram icon" />
           </a>
           <a href="https://github.com/fahrurojak/" target="_blank" rel="noopener noreferrer">
             <img src={githubIcon} alt="Github icon" />
@@ -68,7 +55,9 @@ function Hero() {
             <img src={linkedinIcon} alt="Linkedin icon" />
           </a>
         </span>
-        <p className={`${styles.description} ${styles.typewriter}`}>{displayedText}</p>
+        <p className={`${styles.description} ${styles.fadeIn}`}>
+          {fullText}
+        </p>
         <a href={CV} download>
           <button className="hover">Resume</button>
         </a>
