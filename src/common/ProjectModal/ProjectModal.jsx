@@ -105,6 +105,18 @@ function ProjectModal({ project, onClose }) {
         {/* Text Details */}
         <div className="modal-text">
           <h3>{project.h3}</h3>
+          {project.techStack && (
+            <div className="modal-tech-stack">
+              <span>Tech Stack : </span>
+              <div className="tech-stack-icons">
+                {project.techStack.map((IconElement, idx) => (
+                  <span key={idx} className="tech-icon">
+                    {IconElement}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
           <p>{project.p}</p>
         </div>
 
