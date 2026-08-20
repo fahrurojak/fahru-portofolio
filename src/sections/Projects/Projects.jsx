@@ -12,9 +12,11 @@ import ProjectCard from '../../common/ProjectCard';
 import notes from '../../assets/notes.png';
 import ProjectModal from '../../common/ProjectModal/ProjectModal';
 import { SiReact, SiVite, SiTailwindcss, SiNodedotjs, SiNextdotjs, SiExpress, SiLooker, SiGoogle, SiBootstrap } from 'react-icons/si';
+import { MdViewList, MdGridView } from 'react-icons/md';
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
 
   const projectsData = [
     { src: freshgo, link: "https://fresh-go-fahrurojaks-projects.vercel.app/", h3: "FreshGO", p: "Aplikasi e-commerce modern khusus belanja buah dan sayuran segar langsung dari petani lokal dengan pengiriman instan.", images: [freshgo], techStack: [<SiReact color="#61DAFB" />, <SiVite color="#646CFF" />, <SiTailwindcss color="#06B6D4" />] },
@@ -31,9 +33,28 @@ function Projects() {
   return (
     <>
       <section id="projects" className={`glass-panel ${styles.container}`}>
-      <h1 className="sectionTitle">Projects</h1>
-      <div className={styles.projectsContainer}>
-        {projectsData.map((project, index) => (
+        <div className={styles.header}>
+          <h1 className="sectionTitle" style={{ marginBottom: 0 }}>Projects</h1>
+          <div className={styles.toggleGroup}>
+            <button 
+              className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeMode : ''}`}
+              onClick={() => setViewMode('list')}
+              title="List View"
+            >
+              <MdViewList size={24} />
+            </button>
+            <button 
+              className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeMode : ''}`}
+              onClick={() => setViewMode('grid')}
+              title="Grid View"
+            >
+              <MdGridView size={24} />
+            </button>
+          </div>
+        </div>
+        
+        <div className={`${styles.projectsContainer} ${viewMode === 'list' ? styles.listView : styles.gridView}`}>
+          {projectsData.map((project, index) => (
           <ProjectCard
             key={index}
             src={project.src}

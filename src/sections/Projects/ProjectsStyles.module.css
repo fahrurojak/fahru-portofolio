@@ -1,8 +1,51 @@
 .container {
   display: flex;
   flex-direction: column;
-  text-align: center;
   gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.toggleGroup {
+  display: flex;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .toggleGroup {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toggleBtn {
+  background: transparent;
+  border: none;
+  color: var(--form-text-color);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.toggleBtn:hover {
+  color: var(--text-color);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.activeMode {
+  background: var(--text-color) !important;
+  color: var(--background-color) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .projectsContainer {
@@ -80,14 +123,45 @@
   border-radius: 12px;
 }
 
+/* List View Overrides */
+.listView {
+  grid-template-columns: 1fr !important; /* Force single column */
+}
+
+.listView a {
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  gap: 30px;
+  padding: 20px 30px;
+}
+
+.listView img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 0;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+@media (max-width: 600px) {
+  /* On very small screens, list view still acts like a grid (column) */
+  .listView a {
+    flex-direction: column;
+    text-align: center;
+  }
+  .listView img {
+    margin-bottom: 15px;
+  }
+}
+
 @media (min-width: 600px) {
-  .projectsContainer {
+  .gridView {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1000px) {
-  .projectsContainer {
+  .gridView {
     grid-template-columns: repeat(3, 1fr);
   }
 }
