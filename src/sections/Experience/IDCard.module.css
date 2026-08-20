@@ -2,12 +2,12 @@
   display: flex;
   width: 100%;
   max-width: 250px;
-  height: 400px;
+  height: 550px; /* Properly contains the 180px string + 340px card */
   position: relative;
   align-items: flex-start;
   justify-content: center;
   perspective: 1000px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto;
 }
 
 @media (width >= 800px) {

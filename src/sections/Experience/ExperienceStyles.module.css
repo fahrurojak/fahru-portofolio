@@ -7,7 +7,7 @@
 
 .contentWrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse; /* Reverses order on mobile: Text first, Lanyard second */
   gap: 40px;
 }
 
