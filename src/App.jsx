@@ -14,7 +14,9 @@ function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const scale = useMotionValue(1);
+  const opacity = useMotionValue(0); // Start hidden until mouse moves
   const springScale = useSpring(scale, { stiffness: 400, damping: 25 });
+  const springOpacity = useSpring(opacity, { stiffness: 300, damping: 20 });
 
   useEffect(() => {
 
@@ -25,7 +27,16 @@ function CustomCursor() {
       if (clientX !== undefined && clientY !== undefined) {
         cursorX.set(clientX);
         cursorY.set(clientY);
+        if (opacity.get() === 0) opacity.set(1); // Show cursor when moving
       }
+    };
+
+    const handleMouseLeave = () => {
+      opacity.set(0); // Hide when mouse leaves window
+    };
+
+    const handleMouseEnter = () => {
+      opacity.set(1); // Show when mouse enters window
     };
 
     const handleMouseOver = (e) => {
@@ -41,14 +52,18 @@ function CustomCursor() {
     window.addEventListener('touchmove', moveCursor, { passive: true });
     window.addEventListener('mouseover', handleMouseOver);
     window.addEventListener('touchstart', handleMouseOver, { passive: true });
+    document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+    document.documentElement.addEventListener('mouseenter', handleMouseEnter);
     
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('touchmove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
       window.removeEventListener('touchstart', handleMouseOver);
+      document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
+      document.documentElement.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [cursorX, cursorY, scale]);
+  }, [cursorX, cursorY, scale, opacity]);
 
   return (
     <motion.div
@@ -57,6 +72,7 @@ function CustomCursor() {
         x: cursorX,
         y: cursorY,
         scale: springScale,
+        opacity: springOpacity,
         translateX: "-50%",
         translateY: "-50%"
       }}
