@@ -3,11 +3,17 @@
   width: 100%;
   max-width: 250px;
   height: 400px;
-  position: relative;
+  position: absolute; /* Mobile: placed behind text */
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   align-items: flex-start;
   justify-content: center;
   perspective: 1000px;
-  margin: 0 auto 20px auto;
+  margin: 0;
+  z-index: 0; /* Behind the text */
+  opacity: 0.2; /* Watermark effect so text is readable */
+  pointer-events: none; /* Allow scrolling and clicking on text */
 }
 
 @media (width >= 800px) {
@@ -18,6 +24,10 @@
     height: 900px;
     z-index: 20;
     justify-content: flex-start;
+    transform: none;
+    left: auto;
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 

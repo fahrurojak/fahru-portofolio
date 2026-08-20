@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  position: relative; /* Ensure absolute children are contained */
 }
 
 @media (width >= 800px) {
@@ -24,6 +25,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 5; /* Keep text above the lanyard */
 }
 
 .title {
