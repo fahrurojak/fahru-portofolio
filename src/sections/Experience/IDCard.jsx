@@ -15,27 +15,26 @@ function IDCard() {
     stiffness: 400
   });
 
-  // Calculate drag velocities for chaotic physics
-  const xVelocity = useVelocity(x);
-  const yVelocity = useVelocity(y);
-
-  // Combine Drag, Scroll, and Subtle Velocity for Rotations
+  // Smooth, natural pendulum physics (Position-based, no jerky velocity)
   const rotateZ = useTransform(() => {
-    const dragZ = (x.get() / 200) * 25; // Gentle swing left/right
+    const dragZ = (x.get() / 150) * 45; // Smooth swing left/right
     const scrollZ = (smoothVelocity.get() / 1000) * 10; // Gentle sway on scroll
-    const bounceSwing = (yVelocity.get() / 1000) * 5; // Very slight wobble on vertical snap
-    return dragZ + scrollZ + bounceSwing;
+    return dragZ + scrollZ;
   });
 
   const rotateX = useTransform(() => {
-    const dragX = (y.get() / 200) * -15; // Gentle tilt forward/backward
+    const dragX = (y.get() / 150) * -25; // Smooth tilt forward/backward
     const scrollX = (smoothVelocity.get() / 1000) * 15; // Gentle tilt on scroll
-    const bounceTilt = (xVelocity.get() / 1000) * 5; // Very slight wobble on sideways snap
-    return dragX + scrollX + bounceTilt;
+    return dragX + scrollX;
   });
 
-  // Only map X to rotateY, reduced to 90deg so it doesn't spin completely around wildly
+  // Only map X to rotateY, reduced to 90deg so it doesn't spin wildly
   const rotateY = useTransform(x, [-200, 0, 200], [-90, 0, 90]);
+
+  // Natural flexible joint: Card swings slightly further than the string
+  const cardRotateZ = useTransform(() => {
+    return rotateZ.get() * 0.15; // 15% extra swing at the joint
+  });
 
   // Stretch the string realistically (prevent extreme stretching)
   const stringScaleY = useTransform(y, (latestY) => {
@@ -65,7 +64,14 @@ function IDCard() {
         
         <motion.div 
           className={styles.cardInner}
-          style={{ y, rotateY, rotateX, transformStyle: "preserve-3d" }}
+          style={{ 
+            y, 
+            rotateY, 
+            rotateX, 
+            rotateZ: cardRotateZ, // Apply independent joint wobble
+            transformStyle: "preserve-3d",
+            transformOrigin: "top center" // Pivot from the clip
+          }}
         >
           {/* FRONT */}
           <div className={styles.cardFront}>
@@ -102,8 +108,8 @@ function IDCard() {
       <motion.div
         drag
         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
-        dragElastic={0.2} // Stiff elastic like a real taut string
-        dragTransition={{ bounceStiffness: 300, bounceDamping: 15 }} // Realistic damping, less wild bouncing
+        dragElastic={{ top: 0.1, bottom: 0.1, left: 0.9, right: 0.9 }} // VERY LOOSE horizontally, STIFF vertically
+        dragTransition={{ bounceStiffness: 250, bounceDamping: 12 }} // Bouncier!
         style={{ 
           x, y,
           position: "absolute",

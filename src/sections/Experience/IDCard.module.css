@@ -64,6 +64,18 @@
       transparent 1px,
       transparent 3px
     ),
+    /* Wavy 3D lighting to simulate curves/bends */
+    radial-gradient(circle at 100% 30%, rgba(255,255,255,0.2) 0%, transparent 40%),
+    radial-gradient(circle at 0% 70%, rgba(255,255,255,0.2) 0%, transparent 40%),
+    /* Diagonal Twist/Fold Shadow */
+    linear-gradient(
+      160deg,
+      transparent 30%,
+      rgba(0, 0, 0, 0.7) 45%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 60%
+    ),
+    /* Base Cylindrical Lighting */
     linear-gradient(
       90deg,
       rgba(0, 0, 0, 0.6) 0%,
@@ -72,9 +84,9 @@
       rgba(0, 0, 0, 0.2) 80%,
       rgba(0, 0, 0, 0.7) 100%
     );
-  border-left: 1px solid #030814;
-  border-right: 1px solid #030814;
-  border-radius: 2px;
+  border-radius: 4px;
+  /* Pinch the bottom to make it look folded into the clip */
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
   position: relative;
   z-index: 2;
   margin-top: 0;
@@ -103,9 +115,6 @@
       transparent 4px
     );
   transform: translateZ(-3px); /* Pushed back slightly */
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-radius: inherit;
   z-index: -1;
 }
 
