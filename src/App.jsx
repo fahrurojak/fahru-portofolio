@@ -17,12 +17,15 @@ function CustomCursor() {
   const springScale = useSpring(scale, { stiffness: 400, damping: 25 });
 
   useEffect(() => {
-    // Ignore on touch devices to improve performance
-    if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) return;
 
     const moveCursor = (e) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+      
+      if (clientX !== undefined && clientY !== undefined) {
+        cursorX.set(clientX);
+        cursorY.set(clientY);
+      }
     };
 
     const handleMouseOver = (e) => {
@@ -35,10 +38,15 @@ function CustomCursor() {
     };
 
     window.addEventListener('mousemove', moveCursor);
+    window.addEventListener('touchmove', moveCursor, { passive: true });
     window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('touchstart', handleMouseOver, { passive: true });
+    
     return () => {
       window.removeEventListener('mousemove', moveCursor);
+      window.removeEventListener('touchmove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('touchstart', handleMouseOver);
     };
   }, [cursorX, cursorY, scale]);
 

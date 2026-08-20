@@ -109,11 +109,6 @@ a, button, input, [role="button"], .hover {
   }
 }
 
-@media (pointer: coarse) {
-  .custom-cursor {
-    display: none !important;
-  }
-}
 
 #root {
   display: flex;
