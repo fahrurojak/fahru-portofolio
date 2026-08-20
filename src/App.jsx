@@ -39,6 +39,10 @@ function CustomCursor() {
       opacity.set(1); // Show when mouse enters window
     };
 
+    const handleTouchEnd = () => {
+      opacity.set(0); // Hide when finger leaves phone screen
+    };
+
     const handleMouseOver = (e) => {
       const isHoverable = e.target.closest('a, button, input, [role="button"], .hover, .glass-panel, img');
       if (isHoverable) {
@@ -54,6 +58,8 @@ function CustomCursor() {
     window.addEventListener('touchstart', handleMouseOver, { passive: true });
     document.documentElement.addEventListener('mouseleave', handleMouseLeave);
     document.documentElement.addEventListener('mouseenter', handleMouseEnter);
+    document.documentElement.addEventListener('touchend', handleTouchEnd, { passive: true });
+    document.documentElement.addEventListener('touchcancel', handleTouchEnd, { passive: true });
     
     return () => {
       window.removeEventListener('mousemove', moveCursor);
@@ -62,6 +68,8 @@ function CustomCursor() {
       window.removeEventListener('touchstart', handleMouseOver);
       document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
       document.documentElement.removeEventListener('mouseenter', handleMouseEnter);
+      document.documentElement.removeEventListener('touchend', handleTouchEnd);
+      document.documentElement.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [cursorX, cursorY, scale, opacity]);
 
