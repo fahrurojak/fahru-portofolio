@@ -2,17 +2,12 @@
   display: flex;
   width: 100%;
   max-width: 250px;
-  height: 100%; /* Take full height of container */
-  position: absolute; /* Place behind text on mobile */
-  top: -20px; /* Adjust to align with top */
-  left: 50%;
-  transform: translateX(-50%);
+  height: 550px; /* Contains 180px string + 340px card */
+  position: relative; /* Natural document flow, top to bottom */
   align-items: flex-start;
   justify-content: center;
   perspective: 1000px;
-  margin: 0;
-  z-index: 0; /* Behind the text */
-  pointer-events: auto; /* Allow dragging */
+  margin: 0 auto;
 }
 
 @media (width >= 800px) {

@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  position: relative; /* Contain absolute lanyard */
 }
 
 @media (width >= 800px) {
