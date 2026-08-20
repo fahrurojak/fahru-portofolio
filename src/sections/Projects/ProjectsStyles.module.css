@@ -8,7 +8,66 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
   margin-bottom: 20px;
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 5px 15px;
+  transition: all 0.3s ease;
+}
+
+.searchBar:focus-within {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .searchBar {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='dark'] .searchBar:focus-within {
+  background: rgba(30, 30, 30, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.searchIcon {
+  color: var(--form-text-color);
+  margin-right: 8px;
+}
+
+.searchBar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 14px;
+  width: 150px;
+  transition: width 0.3s ease;
+}
+
+.searchBar input:focus {
+  width: 200px;
+}
+
+.searchBar input::placeholder {
+  color: var(--footer-text-color);
 }
 
 .toggleGroup {
@@ -46,6 +105,15 @@
   background: var(--text-color) !important;
   color: var(--background-color) !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.noResults {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  color: var(--form-text-color);
+  font-style: italic;
+  font-size: 16px;
 }
 
 .projectsContainer {

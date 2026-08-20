@@ -12,11 +12,12 @@ import ProjectCard from '../../common/ProjectCard';
 import notes from '../../assets/notes.png';
 import ProjectModal from '../../common/ProjectModal/ProjectModal';
 import { SiReact, SiVite, SiTailwindcss, SiNodedotjs, SiNextdotjs, SiExpress, SiLooker, SiGoogle, SiBootstrap } from 'react-icons/si';
-import { MdViewList, MdGridView } from 'react-icons/md';
+import { MdViewList, MdGridView, MdSearch } from 'react-icons/md';
 
 function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [searchQuery, setSearchQuery] = useState('');
 
   const projectsData = [
     { src: freshgo, link: "https://fresh-go-fahrurojaks-projects.vercel.app/", h3: "FreshGO", p: "Aplikasi e-commerce modern khusus belanja buah dan sayuran segar langsung dari petani lokal dengan pengiriman instan.", images: [freshgo], techStack: [<SiReact color="#61DAFB" />, <SiVite color="#646CFF" />, <SiTailwindcss color="#06B6D4" />] },
@@ -30,12 +31,27 @@ function Projects() {
     { src: notes, link: "https://notes-app-fahrurojaks-projects.vercel.app/", h3: "Notes App", p: "Aplikasi catatan produktivitas super bersih yang mendukung sinkronisasi cepat dan pengkategorian cerdas.", images: [notes], techStack: [<SiReact color="#61DAFB" />, <SiVite color="#646CFF" />] }
   ];
 
+  const filteredProjects = projectsData.filter((project) => 
+    project.h3.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    project.p.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
       <section id="projects" className={`glass-panel ${styles.container}`}>
         <div className={styles.header}>
           <h1 className="sectionTitle" style={{ marginBottom: 0 }}>Projects</h1>
-          <div className={styles.toggleGroup}>
+          <div className={styles.controlsGroup}>
+            <div className={styles.searchBar}>
+              <MdSearch size={20} className={styles.searchIcon} />
+              <input 
+                type="text" 
+                placeholder="Search projects..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className={styles.toggleGroup}>
             <button 
               className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeMode : ''}`}
               onClick={() => setViewMode('list')}
@@ -54,17 +70,21 @@ function Projects() {
         </div>
         
         <div className={`${styles.projectsContainer} ${viewMode === 'list' ? styles.listView : styles.gridView}`}>
-          {projectsData.map((project, index) => (
-          <ProjectCard
-            key={index}
-            src={project.src}
-            link={project.link}
-            h3={project.h3}
-            p={project.p}
-            onClick={() => setSelectedProject(project)}
-          />
-        ))}
-      </div>
+          {filteredProjects.length > 0 ? (
+            filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                src={project.src}
+                link={project.link}
+                h3={project.h3}
+                p={project.p}
+                onClick={() => setSelectedProject(project)}
+              />
+            ))
+          ) : (
+            <p className={styles.noResults}>No projects found for "{searchQuery}"</p>
+          )}
+        </div>
       </section>
       
       {selectedProject && (
