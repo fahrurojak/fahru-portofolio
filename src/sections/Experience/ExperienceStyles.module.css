@@ -27,30 +27,6 @@
   flex-direction: column;
   position: relative;
   z-index: 10; /* Keep text above the lanyard */
-  background: rgba(255, 255, 255, 0.4); /* Glass-like readability layer on mobile */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 20px;
-  border-radius: 20px;
-}
-
-@media (width >= 800px) {
-  .rightContent {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    padding: 0;
-  }
-}
-
-[data-theme='dark'] .rightContent {
-  background: rgba(0, 0, 0, 0.5); /* Readability layer for dark mode */
-}
-
-@media (width >= 800px) {
-  [data-theme='dark'] .rightContent {
-    background: transparent;
-  }
 }
 
 .title {
