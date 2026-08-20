@@ -25,6 +25,96 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: 
+    radial-gradient(
+      circle at 30% 30%, 
+      rgba(255, 255, 255, 0.6) 0%, 
+      rgba(255, 255, 255, 0.05) 50%, 
+      transparent 80%
+    ),
+    radial-gradient(
+      circle at 70% 70%, 
+      rgba(255, 255, 255, 0) 50%, 
+      rgba(255, 255, 255, 0.1) 100%
+    );
+  backdrop-filter: contrast(120%) saturate(130%) brightness(1.1);
+  -webkit-backdrop-filter: contrast(120%) saturate(130%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+  border-right-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    inset 0 2px 4px rgba(255, 255, 255, 0.8),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.1),
+    inset 2px 0 8px rgba(255, 0, 0, 0.15),
+    inset -2px 0 8px rgba(0, 255, 255, 0.15),
+    -2px 5px 15px rgba(255, 0, 0, 0.08),
+    2px 5px 15px rgba(0, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+[data-theme='dark'] .custom-cursor {
+  background: 
+    radial-gradient(
+      circle at 30% 30%, 
+      rgba(255, 255, 255, 0.25) 0%, 
+      rgba(255, 255, 255, 0.02) 50%, 
+      transparent 80%
+    ),
+    radial-gradient(
+      circle at 70% 70%, 
+      rgba(255, 255, 255, 0) 50%, 
+      rgba(255, 255, 255, 0.05) 100%
+    );
+  backdrop-filter: contrast(120%) saturate(130%) brightness(1.1);
+  -webkit-backdrop-filter: contrast(120%) saturate(130%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+  border-right-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 2px 4px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 6px rgba(0, 0, 0, 0.3),
+    inset 2px 0 8px rgba(255, 0, 0, 0.15),
+    inset -2px 0 8px rgba(0, 255, 255, 0.15),
+    -2px 5px 15px rgba(255, 0, 0, 0.15),
+    2px 5px 15px rgba(0, 255, 255, 0.15);
+}
+
+a, button, input, [role="button"], .hover {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: inline-block; /* Helps scale transform work on inline elements */
+}
+
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, input, [role="button"], .hover {
+    cursor: none !important;
+  }
+  /* Creates optical illusion of magnification under the cursor */
+  a:hover, button:hover, input:hover, [role="button"]:hover, .hover:hover {
+    transform: scale(1.05);
+    z-index: 50;
+    position: relative;
+  }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
 #root {
   display: flex;
   min-height: 100vh;

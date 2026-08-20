@@ -1,0 +1,287 @@
+.lanyardContainer {
+  display: flex;
+  width: 100%;
+  max-width: 250px;
+  height: 400px;
+  position: relative;
+  align-items: flex-start;
+  justify-content: center;
+  perspective: 1000px;
+  margin: 0 auto 20px auto;
+}
+
+@media (width >= 800px) {
+  .lanyardContainer {
+    width: 100%;
+    position: sticky;
+    top: 24px;
+    height: 900px;
+    z-index: 20;
+    justify-content: flex-start;
+  }
+}
+
+.cardWrapper {
+  position: relative; /* Change to relative so it flows properly and doesn't stick out */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: grab;
+  transform-origin: top center;
+  z-index: 10;
+}
+
+.cardWrapper:active {
+  cursor: grabbing;
+}
+
+.lanyardString {
+  width: 24px;
+  height: 180px;
+  background-color: #0b2046;
+  /* Realistic Woven Nylon Texture */
+  background-image: 
+    /* The weave texture */
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.1) 0px,
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    /* Vertical ridges typical of nylon lanyards */
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.2) 0px,
+      rgba(0, 0, 0, 0.2) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    /* Lighting / 3D cylindrical edge effect */
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.15) 50%,
+      rgba(0, 0, 0, 0.2) 80%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
+  border-left: 1px solid #030814;
+  border-right: 1px solid #030814;
+  border-radius: 2px;
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+@media (width >= 800px) {
+  .lanyardString {
+    height: 300px;
+    margin-top: 0;
+  }
+}
+
+.lanyardText {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 10px;
+  letter-spacing: 3px;
+  transform: rotate(-90deg);
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.clip {
+  width: 30px;
+  height: 30px;
+  border: 4px solid #888;
+  border-radius: 50%;
+  margin-top: -15px;
+  margin-bottom: -15px; /* Overlaps with the card's hole */
+  z-index: 3;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.3);
+  background: transparent;
+}
+
+.cardInner {
+  width: 220px;
+  height: 340px;
+  position: relative;
+  z-index: 1;
+}
+
+.cardFront, .cardBack {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #e0e5ec;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cardBack {
+  background: #fff;
+  transform: rotateY(180deg);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  border: 4px solid #003399; /* styling for the back */
+}
+
+[data-theme='dark'] .cardFront, [data-theme='dark'] .cardBack {
+  background: #2a2d34;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme='dark'] .cardBack {
+  border-color: #6699ff;
+}
+
+.backContent h3 {
+  margin: 0 0 10px 0;
+  color: #111;
+  font-size: 20px;
+}
+
+.backContent p {
+  color: #555;
+  font-size: 14px;
+}
+
+[data-theme='dark'] .backContent h3 {
+  color: #fff;
+}
+
+[data-theme='dark'] .backContent p {
+  color: #ccc;
+}
+
+.qrCodePlaceholder {
+  width: 100px;
+  height: 100px;
+  background: repeating-linear-gradient(45deg, #003399, #003399 10px, #e0e5ec 10px, #e0e5ec 20px);
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+.quote {
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 15px !important;
+}
+
+.holeContainer {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hole {
+  width: 40px;
+  height: 12px;
+  background: #111;
+  border-radius: 10px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.cardTopCurve {
+  width: 100%;
+  height: 220px;
+  background: #0b2046;
+  border-bottom-right-radius: 140px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  box-shadow: inset 0 -5px 15px rgba(0,0,0,0.2);
+}
+
+.photo {
+  width: 180px;
+  height: auto;
+  margin-bottom: -15px; /* Make the photo look grounded inside the curve */
+  filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3));
+}
+
+.cardBottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px;
+  flex: 1;
+}
+
+.statusWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.statusWrapper p {
+  margin: 0 !important;
+}
+
+.blinkingDot {
+  width: 8px;
+  height: 8px;
+  background-color: #00e676;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00e676;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.cardText {
+  text-align: right;
+}
+
+.cardText h4 {
+  font-size: 16px;
+  color: #111;
+  margin: 0;
+  font-weight: 800;
+}
+
+.cardText p {
+  font-size: 11px;
+  color: #666;
+  margin: 5px 0 0 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+[data-theme='dark'] .cardText h4 {
+  color: #fff;
+}
+
+[data-theme='dark'] .cardText p {
+  color: #aaa;
+}

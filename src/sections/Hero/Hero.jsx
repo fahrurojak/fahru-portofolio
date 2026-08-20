@@ -20,7 +20,7 @@ function Hero() {
   const githubIcon = theme === 'light' ? githubLight : githubDark;
   const linkedinIcon = theme === 'light' ? linkedinLight : linkedinDark;
 
-  const fullText = "Passionate about software development and data analytics, I excel at creating visually appealing, user-friendly interfaces and leveraging data to enhance user experiences.";
+  const fullText = "Passionate about IT operations, technical support, and web development, I excel at ensuring reliable system performance, troubleshooting complex issues, and creating user-friendly web applications.";
 
   return (
     <section id="hero" className={`glass-panel ${styles.container}`}>
@@ -43,7 +43,7 @@ function Hero() {
           <br />
           Rojak
         </h1>
-        <h2>Software Engineer | Data Enthusiast</h2>
+        <h2>IT Operations | IT Support | Web Developer</h2>
         <span>
           <a href="https://instagram.com/fahruphoto/" target="_blank" rel="noopener noreferrer">
             <img src={twitterIcon} alt="Instagram icon" />
