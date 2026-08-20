@@ -2,12 +2,17 @@
   display: flex;
   width: 100%;
   max-width: 250px;
-  height: 550px; /* Properly contains the 180px string + 340px card */
-  position: relative;
+  height: 100%; /* Take full height of container */
+  position: absolute; /* Place behind text on mobile */
+  top: -20px; /* Adjust to align with top */
+  left: 50%;
+  transform: translateX(-50%);
   align-items: flex-start;
   justify-content: center;
   perspective: 1000px;
-  margin: 0 auto;
+  margin: 0;
+  z-index: 0; /* Behind the text */
+  pointer-events: auto; /* Allow dragging */
 }
 
 @media (width >= 800px) {
@@ -18,6 +23,8 @@
     height: 900px;
     z-index: 20;
     justify-content: flex-start;
+    transform: none;
+    left: auto;
   }
 }
 
