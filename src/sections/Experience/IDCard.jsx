@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring, useScroll, useVelocity } from 'framer-motion';
 import styles from './IDCard.module.css';
 import photo from '../../assets/fahru.png';
 
@@ -7,12 +7,41 @@ function IDCard() {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Directly map rotation from dummy's X to avoid double springs
-  const rotateY = useTransform(x, [-200, 0, 200], [-180, 0, 180]);
-  const rotateZ = useTransform(x, [-200, 0, 200], [-25, 0, 25]);
-  
-  // Map Y to a slight 3D tilt
-  const rotateX = useTransform(y, [-200, 0, 200], [25, 0, -25]);
+  // Scroll swaying physics
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(scrollVelocity, {
+    damping: 50,
+    stiffness: 400
+  });
+
+  // Calculate drag velocities for chaotic physics
+  const xVelocity = useVelocity(x);
+  const yVelocity = useVelocity(y);
+
+  // Combine Drag, Scroll, and Subtle Velocity for Rotations
+  const rotateZ = useTransform(() => {
+    const dragZ = (x.get() / 200) * 25; // Gentle swing left/right
+    const scrollZ = (smoothVelocity.get() / 1000) * 10; // Gentle sway on scroll
+    const bounceSwing = (yVelocity.get() / 1000) * 5; // Very slight wobble on vertical snap
+    return dragZ + scrollZ + bounceSwing;
+  });
+
+  const rotateX = useTransform(() => {
+    const dragX = (y.get() / 200) * -15; // Gentle tilt forward/backward
+    const scrollX = (smoothVelocity.get() / 1000) * 15; // Gentle tilt on scroll
+    const bounceTilt = (xVelocity.get() / 1000) * 5; // Very slight wobble on sideways snap
+    return dragX + scrollX + bounceTilt;
+  });
+
+  // Only map X to rotateY, reduced to 90deg so it doesn't spin completely around wildly
+  const rotateY = useTransform(x, [-200, 0, 200], [-90, 0, 90]);
+
+  // Stretch the string realistically (prevent extreme stretching)
+  const stringScaleY = useTransform(y, (latestY) => {
+    const safeY = Math.max(-30, latestY); // Prevent the string from compressing into nothing
+    return (180 + safeY) / 180;
+  });
 
   return (
     <div className={styles.lanyardContainer} style={{ cursor: "grab" }}>
@@ -25,13 +54,18 @@ function IDCard() {
           pointerEvents: "none" // Let mouse clicks pass through to dummy
         }}
       >
-        <div className={styles.lanyardString}>
+        <motion.div 
+          className={styles.lanyardString}
+          style={{ scaleY: stringScaleY, transformOrigin: "top center" }}
+        >
            <span className={styles.lanyardText}>FAHRU ROJAK</span>
-        </div>
-        <div className={styles.clip}></div>
+        </motion.div>
+        
+        <motion.div className={styles.clip} style={{ y }}></motion.div>
+        
         <motion.div 
           className={styles.cardInner}
-          style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
+          style={{ y, rotateY, rotateX, transformStyle: "preserve-3d" }}
         >
           {/* FRONT */}
           <div className={styles.cardFront}>
@@ -68,8 +102,8 @@ function IDCard() {
       <motion.div
         drag
         dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
-        dragElastic={0.8}
-        dragTransition={{ bounceStiffness: 400, bounceDamping: 5 }} // Mantul-mantul physics
+        dragElastic={0.2} // Stiff elastic like a real taut string
+        dragTransition={{ bounceStiffness: 300, bounceDamping: 15 }} // Realistic damping, less wild bouncing
         style={{ 
           x, y,
           position: "absolute",
