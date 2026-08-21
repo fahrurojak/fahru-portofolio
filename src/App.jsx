@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import './App.css';
 import Contact from './sections/Contact/Contact';
 import Footer from './sections/Footer/Footer';
@@ -8,6 +8,7 @@ import Projects from './sections/Projects/Projects';
 import Skills from './sections/Skills/Skills';
 import NavigationBar from './common/NavigationBar/NavigationBar';
 import LiquidBackground from './common/LiquidBackground/LiquidBackground';
+import GlobalControls from './common/GlobalControls/GlobalControls';
 import Experience from './sections/Experience/Experience';
 
 function CustomCursor() {
@@ -159,10 +160,21 @@ function App() {
     <>
       <CustomCursor />
       <LiquidBackground />
+      <GlobalControls />
       <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="main-content">
-        {renderContent()}
-        {activeTab === 'contact' && <Footer />}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+          >
+            {renderContent()}
+            {activeTab === 'contact' && <Footer />}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </>
   );

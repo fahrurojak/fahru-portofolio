@@ -1,4 +1,3 @@
-import React from 'react';
 import './LiquidBackground.css';
 
 const LiquidBackground = () => {

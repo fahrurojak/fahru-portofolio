@@ -11,7 +11,7 @@
   gap: 40px;
 }
 
-@media (width >= 800px) {
+@media (min-width: 800px) {
   .contentWrapper {
     display: grid;
     grid-template-columns: 5fr 7fr;
@@ -120,7 +120,7 @@
   gap: 5px;
 }
 
-@media (width >= 800px) {
+@media (min-width: 800px) {
   .title {
     font-size: 40px;
   }

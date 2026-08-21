@@ -11,14 +11,16 @@ import excelIcon from '../../assets/excel.svg'
 import SkillList from '../../common/SkillList';
 import Certificates from '../Certificates/Certificates';
 import { useRef } from 'react';
+import { useLanguage } from '../../common/LanguageContext';
 
 function Skills() {
   const containerRef = useRef(null);
+  const { t } = useLanguage();
 
   return (
     <>
       <section id="skills" className={`glass-panel ${styles.container}`} ref={containerRef}>
-        <h1 className="sectionTitle">Skills</h1>
+        <h1 className="sectionTitle">{t('skills.title')}</h1>
         
         <div className={styles.skillList}>
           <SkillList src={htmlIcon} skill="HTML" dragConstraints={containerRef} />

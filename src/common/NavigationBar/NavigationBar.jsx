@@ -1,13 +1,15 @@
-import React from 'react';
 import './NavigationBar.css';
 import { MdHomeFilled, MdWork, MdCode, MdEmail } from 'react-icons/md';
+import { useLanguage } from '../LanguageContext';
 
 const NavigationBar = ({ activeTab, setActiveTab }) => {
+  const { t } = useLanguage();
+
   const navItems = [
-    { id: 'home', icon: <MdHomeFilled />, label: 'Home' },
-    { id: 'projects', icon: <MdWork />, label: 'Projects' },
-    { id: 'skills', icon: <MdCode />, label: 'Skills' },
-    { id: 'contact', icon: <MdEmail />, label: 'Contact' }
+    { id: 'home', icon: <MdHomeFilled />, label: t('nav.home') },
+    { id: 'projects', icon: <MdWork />, label: t('nav.projects') },
+    { id: 'skills', icon: <MdCode />, label: t('nav.skills') },
+    { id: 'contact', icon: <MdEmail />, label: t('nav.contact') }
   ];
 
   return (

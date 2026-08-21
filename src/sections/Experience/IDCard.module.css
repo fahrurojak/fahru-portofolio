@@ -10,7 +10,7 @@
   margin: 0 auto;
 }
 
-@media (width >= 800px) {
+@media (min-width: 800px) {
   .lanyardContainer {
     width: 100%;
     position: sticky;
@@ -118,7 +118,7 @@
   z-index: -1;
 }
 
-@media (width >= 800px) {
+@media (min-width: 800px) {
   .lanyardString {
     height: 300px;
     margin-top: 0;

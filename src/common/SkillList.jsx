@@ -9,7 +9,7 @@ function SkillList({ src, skill, dragConstraints }) {
       whileHover={{ scale: 1.05 }}
       style={{ cursor: 'grab' }}
     >
-      <img src={src} alt="Checkmark icon" />
+      <img src={src} alt={`${skill} icon`} loading="lazy" />
       <p>{skill}</p>
     </motion.span>
   );

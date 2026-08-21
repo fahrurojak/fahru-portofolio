@@ -1,8 +1,5 @@
-import { useState, useEffect } from 'react';
 import styles from './HeroStyles.module.css';
 import heroImg from '../../assets/fahru.png';
-import sun from '../../assets/sun.svg';
-import moon from '../../assets/moon.svg';
 import twitterLight from '../../assets/instagram-light.svg';
 import twitterDark from '../../assets/instagram-dark.svg';
 import githubLight from '../../assets/github-light.svg';
@@ -11,11 +8,12 @@ import linkedinLight from '../../assets/linkedin-light.svg';
 import linkedinDark from '../../assets/linkedin-dark.svg';
 import CV from '../../assets/cv.pdf';
 import { useTheme } from '../../common/ThemeContext';
+import { useLanguage } from '../../common/LanguageContext';
 
 function Hero() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
+  const { t } = useLanguage();
 
-  const themeIcon = theme === 'light' ? sun : moon;
   const twitterIcon = theme === 'light' ? twitterLight : twitterDark;
   const githubIcon = theme === 'light' ? githubLight : githubDark;
   const linkedinIcon = theme === 'light' ? linkedinLight : linkedinDark;
@@ -30,12 +28,6 @@ function Hero() {
           className={styles.hero}
           alt="Photo Fahru"
         />
-        <img
-          className={styles.colorMode}
-          src={themeIcon}
-          alt="Color mode icon"
-          onClick={toggleTheme}
-        />
       </div>
       <div className={styles.info}>
         <h1>
@@ -43,23 +35,23 @@ function Hero() {
           <br />
           Rojak
         </h1>
-        <h2>IT Operations | IT Support | Web Developer</h2>
+        <h2>{t('hero.title')}</h2>
         <span>
-          <a href="https://instagram.com/fahruphoto/" target="_blank" rel="noopener noreferrer">
+          <a href="https://instagram.com/fahruphoto/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <img src={twitterIcon} alt="Instagram icon" />
           </a>
-          <a href="https://github.com/fahrurojak/" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/fahrurojak/" target="_blank" rel="noopener noreferrer" aria-label="Github">
             <img src={githubIcon} alt="Github icon" />
           </a>
-          <a href="https://linkedin.com/in/fahrurojak/" target="_blank" rel="noopener noreferrer">
+          <a href="https://linkedin.com/in/fahrurojak/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <img src={linkedinIcon} alt="Linkedin icon" />
           </a>
         </span>
         <p className={`${styles.description} ${styles.fadeIn}`}>
-          {fullText}
+          {t('hero.desc')}
         </p>
         <a href={CV} download>
-          <button className="hover">Resume</button>
+          <button className="hover">{t('hero.resume')}</button>
         </a>
       </div>
     </section>

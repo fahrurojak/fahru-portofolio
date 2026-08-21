@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './ProjectModal.css';
 
 function ProjectModal({ project, onClose }) {
@@ -90,7 +90,7 @@ function ProjectModal({ project, onClose }) {
             style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
           >
             {images.map((img, idx) => (
-              <img key={idx} src={img} alt={`Screenshot ${idx + 1}`} className="carousel-img" />
+              <img key={idx} src={img} alt={`Screenshot ${idx + 1}`} className="carousel-img" loading="lazy" />
             ))}
           </div>
           

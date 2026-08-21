@@ -1,0 +1,151 @@
+.global-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  z-index: 2000;
+}
+
+/* Modern Language Switch */
+.modern-lang-switch {
+  position: relative;
+  width: 66px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.2) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.1),
+    inset 0 1px 2px rgba(255,255,255,0.8);
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+[data-theme='dark'] .modern-lang-switch {
+  background-color: rgba(30, 30, 30, 0.4);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.5),
+    inset 0 1px 2px rgba(255,255,255,0.2);
+}
+
+.modern-lang-switch:hover, .theme-toggle-btn:hover {
+  transform: scale(1.05);
+}
+
+.modern-lang-switch:active, .theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.switch-slider {
+  position: absolute;
+  top: 3px;
+  width: 28px;
+  height: 24px;
+  background: white;
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+[data-theme='dark'] .switch-slider {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.switch-slider.left {
+  transform: translateX(0);
+}
+
+.switch-slider.right {
+  transform: translateX(30px);
+}
+
+.switch-label {
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  color: #777;
+  width: 28px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+[data-theme='dark'] .switch-label {
+  color: #888;
+}
+
+.active-text {
+  color: #000;
+}
+
+[data-theme='dark'] .active-text {
+  color: #fff;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.2) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.1),
+    inset 0 1px 2px rgba(255,255,255,0.8);
+  transition: transform 0.2s ease;
+}
+
+[data-theme='dark'] .theme-toggle-btn {
+  background-color: rgba(30, 30, 30, 0.4);
+  background-image: radial-gradient(
+    circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.5),
+    inset 0 1px 2px rgba(255,255,255,0.2);
+}
+
+.theme-toggle-btn img {
+  width: 20px;
+  height: 20px;
+}

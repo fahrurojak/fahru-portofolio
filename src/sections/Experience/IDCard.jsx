@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring, useScroll, useVelocity } from 'framer-motion';
 import styles from './IDCard.module.css';
 import photo from '../../assets/fahru.png';

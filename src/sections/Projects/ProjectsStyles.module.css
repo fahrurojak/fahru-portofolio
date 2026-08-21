@@ -6,49 +6,90 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .controlsGroup {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  all: unset;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-color);
+  transition: all 0.2s ease;
+}
+
+.filterBtn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.activeFilter {
+  background: var(--btn-color) !important;
+  color: var(--btn-text-color) !important;
+  border-color: transparent !important;
+}
+
+[data-theme='dark'] .activeFilter {
+  background: #fff !important;
+  color: #000 !important;
 }
 
 .searchBar {
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  padding: 5px 15px;
-  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 15px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); /* Liquid easing */
 }
 
-.searchBar:focus-within {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.searchBar:focus-within, .searchActive {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
-[data-theme='dark'] .searchBar {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme='dark'] .searchBar:focus-within {
-  background: rgba(30, 30, 30, 0.9);
-  border-color: rgba(255, 255, 255, 0.3);
+[data-theme='dark'] .searchBar:focus-within, [data-theme='dark'] .searchActive {
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .searchIcon {
   color: var(--form-text-color);
   margin-right: 8px;
+  transition: color 0.3s ease;
+}
+
+.searchBar:focus-within .searchIcon, .searchActive .searchIcon {
+  color: var(--text-color);
 }
 
 .searchBar input {
@@ -57,17 +98,40 @@
   outline: none;
   color: var(--text-color);
   font-family: inherit;
-  font-size: 14px;
-  width: 150px;
-  transition: width 0.3s ease;
+  font-size: 15px;
+  width: 120px; /* Minimal width initially */
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.searchBar input:focus {
-  width: 200px;
+.searchBar input:focus, .searchActive input {
+  width: 180px; /* Liquid expansion */
 }
 
 .searchBar input::placeholder {
   color: var(--footer-text-color);
+}
+
+.clearBtn {
+  background: transparent;
+  border: none;
+  color: var(--form-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  margin-left: 5px;
+  transition: all 0.2s ease;
+}
+
+.clearBtn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+}
+
+[data-theme='dark'] .clearBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .toggleGroup {
@@ -142,7 +206,7 @@
   border-left: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 20px;
   padding: 20px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 
     0 8px 32px 0 rgba(0, 0, 0, 0.15),
     inset 0 1px 2px rgba(255, 255, 255, 0.6),
@@ -166,7 +230,6 @@
 }
 
 .container a:hover {
-  transform: translateY(-8px) scale(1.02);
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.2),
@@ -211,7 +274,7 @@
   flex-shrink: 0; /* Prevent shrinking */
 }
 
-@media (max-width: 600px) {
+@media (max-width: 799px) {
   /* On very small screens, list view still acts like a grid (column) */
   .listView a {
     flex-direction: column;
@@ -222,13 +285,13 @@
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
   .gridView {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
   .gridView {
     grid-template-columns: repeat(3, 1fr);
   }
