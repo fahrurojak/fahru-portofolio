@@ -9,6 +9,7 @@ import linkedinDark from '../../assets/linkedin-dark.svg';
 import CV from '../../assets/cv.pdf';
 import { useTheme } from '../../common/ThemeContext';
 import { useLanguage } from '../../common/LanguageContext';
+import GlobalControls from '../../common/GlobalControls/GlobalControls';
 
 function Hero() {
   const { theme } = useTheme();
@@ -22,6 +23,7 @@ function Hero() {
 
   return (
     <section id="hero" className={`glass-panel ${styles.container}`}>
+      <GlobalControls />
       <div className={styles.colorModeContainer}>
         <img
           src={heroImg}

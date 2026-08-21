@@ -8,7 +8,6 @@ import Projects from './sections/Projects/Projects';
 import Skills from './sections/Skills/Skills';
 import NavigationBar from './common/NavigationBar/NavigationBar';
 import LiquidBackground from './common/LiquidBackground/LiquidBackground';
-import GlobalControls from './common/GlobalControls/GlobalControls';
 import Experience from './sections/Experience/Experience';
 
 function CustomCursor() {
@@ -160,7 +159,6 @@ function App() {
     <>
       <CustomCursor />
       <LiquidBackground />
-      <GlobalControls />
       <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="main-content">
         <AnimatePresence mode="wait">

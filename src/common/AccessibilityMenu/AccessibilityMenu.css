@@ -62,13 +62,23 @@
 
 .a11y-panel {
   position: absolute;
-  top: 0;
-  right: 50px;
+  top: 50px;
+  right: 50%;
+  transform: translateX(50%);
   width: 320px;
-  max-width: calc(100vw - 80px);
+  max-width: calc(100vw - 40px);
   padding: 20px !important;
-  transform-origin: top right;
+  transform-origin: top center;
   border-radius: 20px !important;
+  z-index: 100;
+}
+
+@media (min-width: 800px) {
+  .a11y-panel {
+    right: 0;
+    transform: none;
+    transform-origin: top right;
+  }
 }
 
 .a11y-header {
