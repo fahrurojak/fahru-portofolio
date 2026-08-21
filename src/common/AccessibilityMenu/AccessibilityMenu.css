@@ -71,6 +71,14 @@
   transform-origin: top center;
   border-radius: 20px !important;
   z-index: 100;
+  /* Make it stand out strongly */
+  background: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme='dark'] .a11y-panel {
+  background: rgba(20, 20, 20, 0.85) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
 }
 
 @media (min-width: 800px) {
