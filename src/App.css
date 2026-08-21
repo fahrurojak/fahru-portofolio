@@ -59,6 +59,10 @@ body {
     2px 5px 15px rgba(0, 255, 255, 0.08);
   pointer-events: none;
   z-index: 9999;
+  /* Hardware acceleration to fix stuttering */
+  will-change: transform, width, height, scale;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 [data-theme='dark'] .custom-cursor {
