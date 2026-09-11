@@ -111,11 +111,33 @@ test('Duo Fold remaps sensors for every screen orientation', async () => {
 });
 
 test('Duo Fold pointer and presentation values stay bounded', async () => {
-  const { MAX_TILT, foldPresentation, pointerTilt } = await import('../src/common/DuoFold/motion.js');
+  const {
+    MAX_TILT,
+    foldPresentation,
+    pointerTilt,
+    predictTilt,
+    renderingQuality,
+    shortestAngleDelta
+  } = await import('../src/common/DuoFold/motion.js');
   const tilt = pointerTilt(390, 0, 390, 844);
   assert.equal(tilt.x, 24);
   assert.equal(tilt.y, 18);
   assert.equal(pointerTilt(10_000, -10_000, 390, 844).x, MAX_TILT);
-  assert.equal(foldPresentation(MAX_TILT, MAX_TILT).amount, 1);
-  assert.equal(foldPresentation(0, 0).amount, 0);
+  const folded = foldPresentation(MAX_TILT, MAX_TILT);
+  assert.equal(folded.amount, 1);
+  assert.equal(folded.soft, 1);
+  assert.equal(folded.medium, 1);
+  assert.equal(folded.strong, 1);
+  assert.deepEqual(foldPresentation(0, 0), {
+    amount: 0,
+    direction: -90,
+    soft: 0,
+    medium: 0,
+    strong: 0
+  });
+  assert.equal(shortestAngleDelta(-179, 179), 2);
+  assert.equal(shortestAngleDelta(179, -179), -2);
+  assert.equal(predictTilt(44, 100), MAX_TILT);
+  assert.equal(renderingQuality({ deviceMemory: 2, hardwareConcurrency: 8 }), 'balanced');
+  assert.equal(renderingQuality({ deviceMemory: 8, hardwareConcurrency: 8 }), 'high');
 });

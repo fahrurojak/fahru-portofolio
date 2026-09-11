@@ -1,10 +1,14 @@
 .duo-fold {
   --duo-amount: 0;
+  --duo-soft: 0;
+  --duo-medium: 0;
+  --duo-strong: 0;
   --duo-direction: 90deg;
-  --duo-blur: 1px;
-  --duo-darkness: 0.12;
-  --duo-x: 0;
-  --duo-y: 0;
+  --duo-blur-soft: 1.5px;
+  --duo-blur-medium: 3px;
+  --duo-blur-strong: 7px;
+  --duo-darkness: 0.08;
+  --duo-grain: 0;
   position: relative;
   display: flex;
   width: 100%;
@@ -13,46 +17,117 @@
 }
 
 .duo-fold__glass,
+.duo-fold__frost,
 .duo-fold__shade {
   position: fixed;
-  inset: -16px;
+  inset: -24px;
   z-index: 9000;
   pointer-events: none;
-  opacity: var(--duo-amount);
+  transform: translateZ(0);
+}
+
+.duo-fold__glass {
   will-change: opacity, backdrop-filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.duo-fold__glass--soft {
+  opacity: var(--duo-soft);
+  backdrop-filter: blur(var(--duo-blur-soft)) saturate(0.96);
+  -webkit-backdrop-filter: blur(var(--duo-blur-soft)) saturate(0.96);
   mask-image: linear-gradient(
     var(--duo-direction),
-    transparent 3%,
-    rgba(0, 0, 0, 0.18) 38%,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 24%,
     #000 100%
   );
   -webkit-mask-image: linear-gradient(
     var(--duo-direction),
-    transparent 3%,
-    rgba(0, 0, 0, 0.18) 38%,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 24%,
     #000 100%
   );
 }
 
-.duo-fold__glass {
-  backdrop-filter: blur(var(--duo-blur)) saturate(0.88);
-  -webkit-backdrop-filter: blur(var(--duo-blur)) saturate(0.88);
-}
-
-.duo-fold__shade {
-  background: linear-gradient(
+.duo-fold__glass--medium {
+  opacity: var(--duo-medium);
+  backdrop-filter: blur(var(--duo-blur-medium)) saturate(0.9) contrast(0.98);
+  -webkit-backdrop-filter: blur(var(--duo-blur-medium)) saturate(0.9) contrast(0.98);
+  mask-image: linear-gradient(
     var(--duo-direction),
-    transparent 5%,
-    rgba(4, 8, 14, 0.04) 42%,
-    rgba(2, 5, 10, var(--duo-darkness)) 100%
+    transparent 18%,
+    rgba(0, 0, 0, 0.08) 42%,
+    #000 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    var(--duo-direction),
+    transparent 18%,
+    rgba(0, 0, 0, 0.08) 42%,
+    #000 100%
   );
 }
 
+.duo-fold__glass--strong {
+  opacity: var(--duo-strong);
+  backdrop-filter: blur(var(--duo-blur-strong)) saturate(0.76) contrast(0.94);
+  -webkit-backdrop-filter: blur(var(--duo-blur-strong)) saturate(0.76) contrast(0.94);
+  mask-image: linear-gradient(
+    var(--duo-direction),
+    transparent 48%,
+    rgba(0, 0, 0, 0.04) 63%,
+    #000 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    var(--duo-direction),
+    transparent 48%,
+    rgba(0, 0, 0, 0.04) 63%,
+    #000 100%
+  );
+}
+
+.duo-fold__frost {
+  z-index: 9001;
+  opacity: var(--duo-grain);
+  background-image:
+    repeating-radial-gradient(circle at 20% 35%, rgba(255, 255, 255, 0.34) 0 0.35px, transparent 0.7px 2.4px),
+    repeating-radial-gradient(circle at 75% 65%, rgba(5, 11, 20, 0.28) 0 0.3px, transparent 0.65px 2.7px);
+  background-size: 5px 5px, 7px 7px;
+  mix-blend-mode: soft-light;
+  mask-image: linear-gradient(var(--duo-direction), transparent 22%, #000 100%);
+  -webkit-mask-image: linear-gradient(var(--duo-direction), transparent 22%, #000 100%);
+}
+
+.duo-fold__shade {
+  z-index: 9002;
+  opacity: var(--duo-amount);
+  background:
+    linear-gradient(
+      var(--duo-direction),
+      transparent 0%,
+      rgba(3, 8, 15, 0.02) 34%,
+      rgba(2, 6, 12, 0.12) 68%,
+      rgba(0, 2, 7, var(--duo-darkness)) 100%
+    ),
+    linear-gradient(
+      var(--duo-direction),
+      transparent 76%,
+      rgba(0, 0, 0, 0.22) 92%,
+      rgba(0, 0, 0, 0.64) 100%
+    );
+}
+
 .duo-fold[data-folding='false'] .duo-fold__glass,
+.duo-fold[data-folding='false'] .duo-fold__frost,
 .duo-fold[data-folding='false'] .duo-fold__shade {
   opacity: 0;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+.duo-fold[data-quality='balanced'] .duo-fold__glass--strong,
+.duo-fold[data-quality='balanced'] .duo-fold__frost {
+  display: none;
 }
 
 .duo-fold__permission {
@@ -61,14 +136,14 @@
   left: 50%;
   z-index: 10001;
   transform: translateX(-50%);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.48);
   border-radius: 999px;
-  padding: 9px 14px;
+  padding: 10px 15px;
   color: #fff;
-  background: rgba(10, 15, 24, 0.78);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(10, 15, 24, 0.8);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28), inset 0 1px rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
   font: 600 12px/1.2 'Inter', sans-serif;
   cursor: pointer;
 }
@@ -79,6 +154,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .duo-fold__glass,
+  .duo-fold__frost,
   .duo-fold__shade,
   .duo-fold__permission { display: none; }
 }
