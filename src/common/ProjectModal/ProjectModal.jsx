@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
 import './ProjectModal.css';
+import { useLanguage } from '../LanguageContext';
 
 function ProjectModal({ project, onClose }) {
+  const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [dragProgress, setDragProgress] = useState(0);
+  const dragProgressRef = useRef(0);
   const thumbRef = useRef(null);
   const containerRef = useRef(null);
+  const closeButtonRef = useRef(null);
   
   // Close on escape key
   useEffect(() => {
@@ -15,6 +19,17 @@ function ProjectModal({ project, onClose }) {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const previousActiveElement = document.activeElement;
+    document.body.style.overflow = 'hidden';
+    closeButtonRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      previousActiveElement?.focus?.();
+    };
+  }, []);
 
   if (!project) return null;
 
@@ -33,8 +48,7 @@ function ProjectModal({ project, onClose }) {
   // Slide to unlock logic
   const handlePointerDown = (e) => {
     e.preventDefault();
-    document.addEventListener('pointermove', handlePointerMove);
-    document.addEventListener('pointerup', handlePointerUp);
+    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e) => {
@@ -43,43 +57,59 @@ function ProjectModal({ project, onClose }) {
     const containerRect = containerRef.current.getBoundingClientRect();
     const thumbWidth = thumbRef.current.offsetWidth;
     const maxDrag = containerRect.width - thumbWidth - 8; // 8px padding
+    if (maxDrag <= 0) return;
     
     let newX = e.clientX - containerRect.left - thumbWidth / 2;
     newX = Math.max(0, Math.min(newX, maxDrag));
     
     const progress = newX / maxDrag;
+    dragProgressRef.current = progress;
     setDragProgress(progress);
     
     thumbRef.current.style.transform = `translateX(${newX}px)`;
   };
 
-  const handlePointerUp = () => {
-    document.removeEventListener('pointermove', handlePointerMove);
-    document.removeEventListener('pointerup', handlePointerUp);
-    
-    setDragProgress((prevProgress) => {
-      if (prevProgress > 0.9) {
-        // Unlock threshold reached
-        window.open(project.link, '_blank');
-        onClose(); // Optional: close modal after opening link
-      } else {
-        // Reset thumb
-        if (thumbRef.current) {
-          thumbRef.current.style.transition = 'transform 0.3s ease';
-          thumbRef.current.style.transform = 'translateX(0px)';
-          setTimeout(() => {
-            if(thumbRef.current) thumbRef.current.style.transition = 'none';
-          }, 300);
-        }
-      }
-      return 0; // Reset state
-    });
+  const openProject = () => {
+    const openedWindow = window.open(project.link, '_blank', 'noopener,noreferrer');
+    if (openedWindow) openedWindow.opener = null;
+    onClose();
+  };
+
+  const resetSlider = () => {
+    if (thumbRef.current) {
+      thumbRef.current.style.transition = 'transform 0.3s ease';
+      thumbRef.current.style.transform = 'translateX(0px)';
+      setTimeout(() => {
+        if (thumbRef.current) thumbRef.current.style.transition = 'none';
+      }, 300);
+    }
+    dragProgressRef.current = 0;
+    setDragProgress(0);
+  };
+
+  const handlePointerUp = (e) => {
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+
+    if (dragProgressRef.current > 0.9) {
+      openProject();
+    } else {
+      resetSlider();
+    }
+  };
+
+  const handlePointerCancel = (e) => {
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+    resetSlider();
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="close-button" onClick={onClose} aria-label="Close modal">
+      <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="project-modal-title" onClick={(e) => e.stopPropagation()}>
+        <button ref={closeButtonRef} type="button" className="close-button" onClick={onClose} aria-label="Close modal">
           ✕
         </button>
 
@@ -96,15 +126,15 @@ function ProjectModal({ project, onClose }) {
           
           {images.length > 1 && (
             <>
-              <div className="carousel-btn left" onClick={handlePrevImage}>❮</div>
-              <div className="carousel-btn right" onClick={handleNextImage}>❯</div>
+              <button type="button" className="carousel-btn left" onClick={handlePrevImage} aria-label="Previous image">❮</button>
+              <button type="button" className="carousel-btn right" onClick={handleNextImage} aria-label="Next image">❯</button>
             </>
           )}
         </div>
 
         {/* Text Details */}
         <div className="modal-text">
-          <h3>{project.h3}</h3>
+          <h3 id="project-modal-title">{project.h3}</h3>
           {project.techStack && (
             <div className="modal-tech-stack">
               <span>Tech Stack : </span>
@@ -120,21 +150,36 @@ function ProjectModal({ project, onClose }) {
           <p>{project.p}</p>
         </div>
 
-        {/* Slide to open button */}
+        {/* Only show the project opener when a destination is available. */}
+        {project.link ? (
         <div className="slide-container" ref={containerRef}>
           <div 
             className="slide-track" 
             style={{ width: `calc(48px + ${dragProgress * 100}%)` }} 
           />
-          <div className="slide-text">Slide Untuk Membuka Web</div>
-          <div 
+          <div className="slide-text">{t('projects.openProject')}</div>
+          <button
+            type="button"
             className="slide-thumb" 
             ref={thumbRef}
             onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerCancel}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                openProject();
+              }
+            }}
+            aria-label={`${t('projects.openProject')}: ${project.h3}`}
           >
             ❯
-          </div>
+          </button>
         </div>
+        ) : (
+          <p className="project-link-coming-soon">{t('projects.linkComingSoon')}</p>
+        )}
       </div>
     </div>
   );

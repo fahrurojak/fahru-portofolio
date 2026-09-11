@@ -142,6 +142,7 @@
   align-items: center;
   color: #333;
   transition: transform 0.2s ease;
+  padding: 0;
 }
 .carousel-btn:hover {
   transform: translateY(-50%) scale(1.1);
@@ -256,6 +257,8 @@
   cursor: grab;
   touch-action: none;
   color: #333;
+  padding: 0;
+  border: 0;
 }
 [data-theme='dark'] .slide-thumb {
   background: rgba(255,255,255,0.2);
@@ -264,6 +267,22 @@
 }
 .slide-thumb:active {
   cursor: grabbing;
+}
+
+.project-link-coming-soon {
+  margin: 10px 0 0;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+[data-theme='dark'] .project-link-coming-soon {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 

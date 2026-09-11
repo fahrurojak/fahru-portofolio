@@ -5,10 +5,12 @@
   align-items: center;
   gap: 30px;
   text-align: center;
-  padding: 20px 0;
+  padding: 28px 20px;
 }
 
 .hero {
+  width: 100%;
+  height: auto;
   max-width: 180px;
   border-radius: 50%; /* Give it a clean circular look if it's not already */
 }
@@ -20,6 +22,7 @@
 }
 
 .info {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +60,8 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-button {
+.resumeButton {
+  display: inline-block;
   background: linear-gradient(135deg, var(--btn-color) 0%, #333 100%);
   color: var(--btn-text-color);
   border: none;
@@ -68,24 +72,25 @@ button {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  text-decoration: none;
 }
 
-[data-theme='dark'] button {
+[data-theme='dark'] .resumeButton {
   background: linear-gradient(135deg, #fff 0%, #ccc 100%);
   color: #000;
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
 }
 
-button:hover {
+.resumeButton:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme='dark'] button:hover {
+[data-theme='dark'] .resumeButton:hover {
   box-shadow: 0 15px 25px rgba(255, 255, 255, 0.2);
 }
 
-button:active {
+.resumeButton:active {
   transform: translateY(1px);
 }
 
@@ -93,7 +98,7 @@ button:active {
   .container {
     flex-direction: row-reverse;
     justify-content: center;
-    gap: 80px;
+    gap: clamp(24px, 4vw, 48px);
     text-align: left;
   }
 
@@ -111,6 +116,7 @@ button:active {
   }
 
   .hero {
-    max-width: 250px;
+    max-width: clamp(160px, 20vw, 230px);
   }
+  .colorModeContainer { flex: 0 0 32%; }
 }

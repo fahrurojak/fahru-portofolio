@@ -16,9 +16,12 @@ const NavigationBar = ({ activeTab, setActiveTab }) => {
     <nav className="bottom-nav">
       {navItems.map((item) => (
         <button
+          type="button"
           key={item.id}
           className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
           onClick={() => setActiveTab(item.id)}
+          aria-current={activeTab === item.id ? 'page' : undefined}
+          aria-label={item.label}
         >
           <div className="icon-container">{item.icon}</div>
           <span className="nav-label">{item.label}</span>

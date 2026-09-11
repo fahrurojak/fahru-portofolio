@@ -16,30 +16,27 @@ function GlobalControls() {
       <AccessibilityMenu />
       
       {/* Modern Language Switch */}
-      <div 
+      <button
+        type="button"
         className="modern-lang-switch" 
         onClick={toggleLanguage}
-        role="button"
-        tabIndex="0"
-        onKeyDown={(e) => { if (e.key === 'Enter') toggleLanguage(); }}
-        aria-label="Toggle Language"
+        aria-label={language === 'en' ? 'Ganti bahasa ke Indonesia' : 'Switch language to English'}
       >
         <div className={`switch-slider ${language === 'en' ? 'right' : 'left'}`}></div>
         <span className={`switch-label ${language === 'id' ? 'active-text' : ''}`}>ID</span>
         <span className={`switch-label ${language === 'en' ? 'active-text' : ''}`}>EN</span>
-      </div>
+      </button>
 
       {/* Dark Mode Toggle */}
-      <div 
+      <button
+        type="button"
         className="theme-toggle-btn"
         onClick={toggleTheme}
-        role="button"
-        tabIndex="0"
-        onKeyDown={(e) => { if (e.key === 'Enter') toggleTheme(); }}
-        aria-label="Toggle Theme"
+        aria-label={theme === 'light' ? 'Aktifkan mode gelap' : 'Aktifkan mode terang'}
       >
-        <img src={themeIcon} alt="Theme Icon" />
-      </div>
+        <img src={themeIcon} alt="" />
+      </button>
+
     </div>
   );
 }

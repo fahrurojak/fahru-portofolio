@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Fahru Portfolio star</title>
+  <rect width="512" height="512" rx="112" fill="#111827"/>
+  <path d="M256 67 310 184l128 16-94 88 25 126-113-62-113 62 25-126-94-88 128-16Z" fill="#facc15"/>
+  <path d="M256 110 297 200l99 12-73 68 20 98-87-48-87 48 20-98-73-68 99-12Z" fill="#fde68a" opacity=".72"/>
+</svg>

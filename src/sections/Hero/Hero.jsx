@@ -19,8 +19,6 @@ function Hero() {
   const githubIcon = theme === 'light' ? githubLight : githubDark;
   const linkedinIcon = theme === 'light' ? linkedinLight : linkedinDark;
 
-  const fullText = "Passionate about IT operations, technical support, and web development, I excel at ensuring reliable system performance, troubleshooting complex issues, and creating user-friendly web applications.";
-
   return (
     <section id="hero" className={`glass-panel ${styles.container}`}>
       <GlobalControls />
@@ -52,8 +50,8 @@ function Hero() {
         <p className={`${styles.description} ${styles.fadeIn}`}>
           {t('hero.desc')}
         </p>
-        <a href={CV} download>
-          <button className="hover">{t('hero.resume')}</button>
+        <a className={`${styles.resumeButton} hover`} href={CV} download>
+          {t('hero.resume')}
         </a>
       </div>
     </section>

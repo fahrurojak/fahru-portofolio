@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 function AccessibilityMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const { 
-    fontSize, increaseFontSize, decreaseFontSize, resetFontSize,
+    fontSize, increaseFontSize, decreaseFontSize,
     grayscale, toggleGrayscale,
     dyslexiaFont, toggleDyslexiaFont,
     highlightLinks, toggleHighlightLinks,
@@ -34,9 +34,12 @@ function AccessibilityMenu() {
   return (
     <div className="a11y-widget" ref={menuRef}>
       <button 
+        type="button"
         className={`a11y-fab ${isOpen ? 'active' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Accessibility Menu"
+        aria-expanded={isOpen}
+        aria-controls="accessibility-panel"
         title={isEn ? "Accessibility Menu" : "Menu Aksesibilitas"}
       >
         {isOpen ? <MdClose size={20} /> : <MdAccessibilityNew size={20} />}
@@ -45,7 +48,10 @@ function AccessibilityMenu() {
       <AnimatePresence>
         {isOpen && (
           <motion.div 
+            id="accessibility-panel"
             className="a11y-panel glass-panel"
+            role="dialog"
+            aria-label={isEn ? "Accessibility Tools" : "Alat Aksesibilitas"}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
@@ -53,7 +59,7 @@ function AccessibilityMenu() {
           >
             <div className="a11y-header">
               <h3>{isEn ? "Accessibility Tools" : "Alat Aksesibilitas"}</h3>
-              <button className="a11y-reset-btn" onClick={resetAll} title={isEn ? "Reset All" : "Atur Ulang Semua"}>
+              <button type="button" className="a11y-reset-btn" onClick={resetAll} title={isEn ? "Reset All" : "Atur Ulang Semua"}>
                 <MdRefresh size={18} /> {isEn ? "Reset" : "Reset"}
               </button>
             </div>
@@ -66,13 +72,13 @@ function AccessibilityMenu() {
                   <span>{isEn ? "Text Size" : "Ukuran Teks"} ({fontSize}%)</span>
                 </div>
                 <div className="a11y-font-controls">
-                  <button onClick={decreaseFontSize} disabled={fontSize <= 100}><MdZoomOut /></button>
-                  <button onClick={increaseFontSize} disabled={fontSize >= 140}><MdZoomIn /></button>
+                  <button type="button" aria-label={isEn ? 'Decrease text size' : 'Perkecil ukuran teks'} onClick={decreaseFontSize} disabled={fontSize <= 100}><MdZoomOut /></button>
+                  <button type="button" aria-label={isEn ? 'Increase text size' : 'Perbesar ukuran teks'} onClick={increaseFontSize} disabled={fontSize >= 140}><MdZoomIn /></button>
                 </div>
               </div>
 
               {/* Grayscale */}
-              <div className="a11y-item" onClick={toggleGrayscale}>
+              <button type="button" className="a11y-item" onClick={toggleGrayscale} aria-pressed={grayscale}>
                 <div className="a11y-item-info">
                   <span className="a11y-icon"><MdFormatColorReset /></span>
                   <span>{isEn ? "Grayscale" : "Mode Hitam Putih"}</span>
@@ -80,10 +86,10 @@ function AccessibilityMenu() {
                 <div className={`a11y-switch ${grayscale ? 'on' : 'off'}`}>
                   <div className="a11y-thumb"></div>
                 </div>
-              </div>
+              </button>
 
               {/* Dyslexia Font */}
-              <div className="a11y-item" onClick={toggleDyslexiaFont}>
+              <button type="button" className="a11y-item" onClick={toggleDyslexiaFont} aria-pressed={dyslexiaFont}>
                 <div className="a11y-item-info">
                   <span className="a11y-icon"><MdFontDownload /></span>
                   <span>{isEn ? "Dyslexia Friendly" : "Font Disleksia"}</span>
@@ -91,10 +97,10 @@ function AccessibilityMenu() {
                 <div className={`a11y-switch ${dyslexiaFont ? 'on' : 'off'}`}>
                   <div className="a11y-thumb"></div>
                 </div>
-              </div>
+              </button>
 
               {/* Highlight Links */}
-              <div className="a11y-item" onClick={toggleHighlightLinks}>
+              <button type="button" className="a11y-item" onClick={toggleHighlightLinks} aria-pressed={highlightLinks}>
                 <div className="a11y-item-info">
                   <span className="a11y-icon"><MdLink /></span>
                   <span>{isEn ? "Highlight Links" : "Sorot Tautan"}</span>
@@ -102,10 +108,10 @@ function AccessibilityMenu() {
                 <div className={`a11y-switch ${highlightLinks ? 'on' : 'off'}`}>
                   <div className="a11y-thumb"></div>
                 </div>
-              </div>
+              </button>
 
               {/* Big Cursor */}
-              <div className="a11y-item" onClick={toggleBigCursor}>
+              <button type="button" className="a11y-item" onClick={toggleBigCursor} aria-pressed={bigCursor}>
                 <div className="a11y-item-info">
                   <span className="a11y-icon"><MdTouchApp /></span>
                   <span>{isEn ? "Big Cursor" : "Kursor Besar"}</span>
@@ -113,7 +119,7 @@ function AccessibilityMenu() {
                 <div className={`a11y-switch ${bigCursor ? 'on' : 'off'}`}>
                   <div className="a11y-thumb"></div>
                 </div>
-              </div>
+              </button>
             </div>
           </motion.div>
         )}

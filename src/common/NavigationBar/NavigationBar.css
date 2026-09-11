@@ -1,11 +1,12 @@
 .bottom-nav {
   position: fixed;
-  bottom: 25px;
+  bottom: max(6px, env(safe-area-inset-bottom));
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 30px);
+  width: calc(100% - 16px);
   max-width: 420px;
-  height: 70px;
+  height: 66px;
+  box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.4);
   background-image: radial-gradient(
     circle at calc(50% + var(--glare-x, 0) * 60%) calc(50% + var(--glare-y, 0) * 60%),
@@ -13,8 +14,8 @@
     rgba(255, 255, 255, 0.2) 40%,
     rgba(255, 255, 255, 0) 70%
   );
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.1),
@@ -25,7 +26,7 @@
   justify-content: space-around;
   align-items: center;
   z-index: 1000;
-  padding: 0 12px;
+  padding: 0 8px;
 }
 
 [data-theme='dark'] .bottom-nav {
@@ -119,8 +120,26 @@
   margin-top: 2px;
 }
 
-/* Desktop Sidebar Layout */
-@media (min-width: 800px) {
+@media (max-width: 360px) {
+  .bottom-nav {
+    width: calc(100% - 10px);
+    height: 62px;
+    padding: 0 4px;
+  }
+
+  .nav-item {
+    min-width: 0;
+    min-height: 50px;
+    margin: 0 2px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+  }
+}
+
+/* Keep the bottom dock on touch tablets; use a sidebar only on desktop-like devices. */
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
   .bottom-nav {
     top: 50%;
     bottom: auto;

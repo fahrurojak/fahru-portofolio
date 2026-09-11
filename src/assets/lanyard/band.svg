@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="96" viewBox="0 0 640 96">
+<defs><pattern id="woven-nylon" width="12" height="12" patternUnits="userSpaceOnUse"><rect x="0" y="1" width="7" height="4" rx="1" fill="#fff" fill-opacity=".13"/><rect x="6" y="7" width="6" height="4" rx="1" fill="#fff" fill-opacity=".1"/><path d="M0 6h12M5 0v5M11 6v6" stroke="#071a30" stroke-opacity=".22" stroke-width="1"/></pattern></defs>
+<rect width="640" height="96" fill="#244e7b"/>
+<rect width="640" height="96" fill="url(#woven-nylon)"/>
+<text x="320" y="68" font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="700" letter-spacing="4" fill="#f5f8fc" text-anchor="middle">FAHRU ROJAK</text>
+</svg>

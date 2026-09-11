@@ -129,6 +129,7 @@
 }
 
 .a11y-item {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -138,6 +139,9 @@
   cursor: pointer;
   transition: background 0.2s;
   border: 1px solid transparent;
+  color: var(--text-color);
+  font: inherit;
+  text-align: left;
 }
 
 .a11y-item:hover {

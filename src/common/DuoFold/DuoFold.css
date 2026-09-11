@@ -1,0 +1,84 @@
+.duo-fold {
+  --duo-amount: 0;
+  --duo-direction: 90deg;
+  --duo-blur: 1px;
+  --duo-darkness: 0.12;
+  --duo-x: 0;
+  --duo-y: 0;
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.duo-fold__glass,
+.duo-fold__shade {
+  position: fixed;
+  inset: -16px;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: var(--duo-amount);
+  will-change: opacity, backdrop-filter;
+  mask-image: linear-gradient(
+    var(--duo-direction),
+    transparent 3%,
+    rgba(0, 0, 0, 0.18) 38%,
+    #000 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    var(--duo-direction),
+    transparent 3%,
+    rgba(0, 0, 0, 0.18) 38%,
+    #000 100%
+  );
+}
+
+.duo-fold__glass {
+  backdrop-filter: blur(var(--duo-blur)) saturate(0.88);
+  -webkit-backdrop-filter: blur(var(--duo-blur)) saturate(0.88);
+}
+
+.duo-fold__shade {
+  background: linear-gradient(
+    var(--duo-direction),
+    transparent 5%,
+    rgba(4, 8, 14, 0.04) 42%,
+    rgba(2, 5, 10, var(--duo-darkness)) 100%
+  );
+}
+
+.duo-fold[data-folding='false'] .duo-fold__glass,
+.duo-fold[data-folding='false'] .duo-fold__shade {
+  opacity: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.duo-fold__permission {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top));
+  left: 50%;
+  z-index: 10001;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  padding: 9px 14px;
+  color: #fff;
+  background: rgba(10, 15, 24, 0.78);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font: 600 12px/1.2 'Inter', sans-serif;
+  cursor: pointer;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .duo-fold__permission { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .duo-fold__glass,
+  .duo-fold__shade,
+  .duo-fold__permission { display: none; }
+}
