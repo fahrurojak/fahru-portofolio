@@ -117,7 +117,8 @@ test('Duo Fold pointer and presentation values stay bounded', async () => {
     pointerTilt,
     predictTilt,
     renderingQuality,
-    shortestAngleDelta
+    shortestAngleDelta,
+    stabilizeTilt
   } = await import('../src/common/DuoFold/motion.js');
   const tilt = pointerTilt(390, 0, 390, 844);
   assert.equal(tilt.x, 24);
@@ -138,6 +139,9 @@ test('Duo Fold pointer and presentation values stay bounded', async () => {
   assert.equal(shortestAngleDelta(-179, 179), 2);
   assert.equal(shortestAngleDelta(179, -179), -2);
   assert.equal(predictTilt(44, 100), MAX_TILT);
-  assert.equal(renderingQuality({ deviceMemory: 2, hardwareConcurrency: 8 }), 'balanced');
+  assert.equal(stabilizeTilt(0.8), 0);
+  assert.ok(stabilizeTilt(10) > 0);
+  assert.equal(renderingQuality({ deviceMemory: 2, hardwareConcurrency: 8 }), 'lite');
+  assert.equal(renderingQuality({ deviceMemory: 8, hardwareConcurrency: 8, coarsePointer: true }), 'balanced');
   assert.equal(renderingQuality({ deviceMemory: 8, hardwareConcurrency: 8 }), 'high');
 });

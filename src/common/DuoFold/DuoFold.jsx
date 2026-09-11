@@ -7,7 +7,8 @@ import {
   predictTilt,
   remapOrientation,
   renderingQuality,
-  shortestAngleDelta
+  shortestAngleDelta,
+  stabilizeTilt
 } from './motion';
 import './DuoFold.css';
 
@@ -36,6 +37,7 @@ export default function DuoFold({ children }) {
     touchStartY: 0,
     touching: false,
     sensorActive: false,
+    foldingActive: false,
     lastFrameTime: 0
   });
   const reducedMotion = useReducedMotion();
@@ -49,7 +51,8 @@ export default function DuoFold({ children }) {
     return renderingQuality({
       deviceMemory: navigator.deviceMemory,
       hardwareConcurrency: navigator.hardwareConcurrency,
-      saveData: navigator.connection?.saveData
+      saveData: navigator.connection?.saveData,
+      coarsePointer: window.matchMedia?.('(pointer: coarse)').matches
     });
   });
 
@@ -59,28 +62,32 @@ export default function DuoFold({ children }) {
     const state = motionRef.current;
     const presentation = foldPresentation(state.currentX, state.currentY);
     const { amount, direction, soft, medium, strong } = presentation;
-    const set = (name, value) => surface.style.setProperty(name, value);
+    const directionStep = quality === 'lite' ? 8 : quality === 'balanced' ? 4 : 2;
+    const stableDirection = Math.round(direction / directionStep) * directionStep;
 
-    set('--duo-amount', amount.toFixed(4));
-    set('--duo-soft', soft.toFixed(4));
-    set('--duo-medium', medium.toFixed(4));
-    set('--duo-strong', strong.toFixed(4));
-    set('--duo-direction', `${direction.toFixed(2)}deg`);
-    set('--duo-blur-soft', `${(1.5 + amount * 3.5).toFixed(2)}px`);
-    set('--duo-blur-medium', `${(3 + amount * 8).toFixed(2)}px`);
-    set('--duo-blur-strong', `${(7 + amount * 15).toFixed(2)}px`);
-    set('--duo-darkness', (0.08 + amount * 0.48).toFixed(4));
-    set('--duo-grain', (amount * 0.16).toFixed(4));
-    set('--glare-x', (state.currentX / 45).toFixed(4));
-    set('--glare-y', (state.currentY / 45).toFixed(4));
-    surface.dataset.folding = amount > 0.01 ? 'true' : 'false';
-  }, []);
+    // One inline-style write avoids triggering a separate style invalidation
+    // for every custom property on sensor-heavy mobile browsers.
+    surface.style.cssText = [
+      `--duo-amount:${amount.toFixed(4)}`,
+      `--duo-soft:${soft.toFixed(4)}`,
+      `--duo-medium:${medium.toFixed(4)}`,
+      `--duo-strong:${strong.toFixed(4)}`,
+      `--duo-direction:${stableDirection}deg`,
+      `--duo-darkness:${(0.08 + amount * 0.48).toFixed(4)}`,
+      `--duo-grain:${(amount * 0.16).toFixed(4)}`,
+      `--glare-x:${(state.currentX / 45).toFixed(4)}`,
+      `--glare-y:${(state.currentY / 45).toFixed(4)}`
+    ].join(';');
+    if (!state.foldingActive && amount > 0.035) state.foldingActive = true;
+    if (state.foldingActive && amount < 0.007) state.foldingActive = false;
+    surface.dataset.folding = state.foldingActive ? 'true' : 'false';
+  }, [quality]);
 
   const animate = useCallback((now) => {
     const state = motionRef.current;
     const dt = Math.min((now - (state.lastFrameTime || now)) / 1000, 0.05);
     state.lastFrameTime = now;
-    const smoothing = 1 - Math.exp(-15 * dt);
+    const smoothing = 1 - Math.exp(-(quality === 'high' ? 13 : 10) * dt);
     state.currentX += (state.targetX - state.currentX) * smoothing;
     state.currentY += (state.targetY - state.currentY) * smoothing;
     paint();
@@ -95,7 +102,7 @@ export default function DuoFold({ children }) {
     state.lastFrameTime = 0;
     paint();
     frameRef.current = 0;
-  }, [paint]);
+  }, [paint, quality]);
 
   const setTarget = useCallback((x, y) => {
     if (reducedMotion) return;
@@ -181,8 +188,9 @@ export default function DuoFold({ children }) {
       const rate = event.rotationRate;
       if (!rate) return;
       const remapped = remapOrientation(rate.beta || 0, rate.gamma || 0, getScreenAngle());
-      motionRef.current.gyroX = remapped.x;
-      motionRef.current.gyroY = -remapped.y;
+      const state = motionRef.current;
+      state.gyroX += (remapped.x - state.gyroX) * 0.24;
+      state.gyroY += (-remapped.y - state.gyroY) * 0.24;
     };
 
     const onOrientation = event => {
@@ -212,8 +220,8 @@ export default function DuoFold({ children }) {
         getScreenAngle()
       );
       setTarget(
-        predictTilt(measured.x, state.gyroX),
-        predictTilt(-measured.y, state.gyroY)
+        stabilizeTilt(predictTilt(measured.x, state.gyroX)),
+        stabilizeTilt(predictTilt(-measured.y, state.gyroY))
       );
     };
 

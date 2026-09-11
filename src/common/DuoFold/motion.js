@@ -20,7 +20,15 @@ export function shortestAngleDelta(current, reference) {
 }
 
 export function predictTilt(measured, rotationRate, horizon = SENSOR_PREDICTION_SECONDS) {
-  return clampTilt(measured + rotationRate * horizon);
+  const safeRate = clamp(rotationRate, -360, 360);
+  return clampTilt(measured + safeRate * horizon);
+}
+
+export function stabilizeTilt(value, deadZone = 1.2) {
+  const clamped = clampTilt(value);
+  const magnitude = Math.abs(clamped);
+  if (magnitude <= deadZone) return 0;
+  return Math.sign(clamped) * (magnitude - deadZone) * MAX_TILT / (MAX_TILT - deadZone);
 }
 
 export function pointerTilt(clientX, clientY, width, height) {
@@ -42,6 +50,12 @@ export function foldPresentation(x, y) {
 }
 
 
-export function renderingQuality({ deviceMemory = 8, hardwareConcurrency = 8, saveData = false } = {}) {
-  return saveData || deviceMemory < 4 || hardwareConcurrency < 4 ? 'balanced' : 'high';
+export function renderingQuality({
+  deviceMemory = 8,
+  hardwareConcurrency = 8,
+  saveData = false,
+  coarsePointer = false
+} = {}) {
+  if (saveData || deviceMemory < 4 || hardwareConcurrency < 4) return 'lite';
+  return coarsePointer ? 'balanced' : 'high';
 }
