@@ -27,9 +27,18 @@ function load(relative, react, globals) {
   return module.exports.default;
 }
 
-test('cursor batches movement and removes work on touch, tab hiding and unmount', () => {
+test('iOS cursor batches movement, morphs magnetically and cleans up safely', () => {
   const win = events(), doc = events(), root = events(), media = { ...events(), matches: true };
-  const element = { style: {} }, frames = new Map();
+  const rootClasses = new Set();
+  root.classList = {
+    add: value => rootClasses.add(value),
+    remove: value => rootClasses.delete(value)
+  };
+  const element = {
+    dataset: {},
+    style: { setProperty(name, value) { this[name] = value; } }
+  };
+  const frames = new Map();
   let effect, id = 0;
   win.matchMedia = () => media;
   doc.documentElement = root;
@@ -41,23 +50,60 @@ test('cursor batches movement and removes work on touch, tab hiding and unmount'
     cancelAnimationFrame: key => frames.delete(key)
   });
   Cursor(); const cleanup = effect();
-  for (let i = 0; i < 100; i++) win.emit('pointermove', { pointerType: 'mouse', clientX: i, clientY: i });
-  assert.equal(frames.size, 1);
-  let now = 0;
-  for (let step = 0; step < 80 && frames.size; step++) {
-    const paints = [...frames.values()]; frames.clear(); now += 16.667;
-    for (const paint of paints) paint(now);
+  const plainTarget = { closest: () => null };
+  const drainFrames = () => {
+    let now = 0;
+    for (let step = 0; step < 80 && frames.size; step++) {
+      const paints = [...frames.values()]; frames.clear(); now += 16.667;
+      for (const paint of paints) paint(now);
+    }
+  };
+
+  assert.equal(rootClasses.has('has-custom-cursor'), true);
+  for (let i = 0; i < 100; i++) {
+    win.emit('pointermove', { pointerType: 'mouse', clientX: i, clientY: i, target: plainTarget });
   }
+  assert.equal(frames.size, 1);
+  drainFrames();
   assert.equal(frames.size, 0);
   assert.match(element.style.transform, /99\.00px, 99\.00px/);
-  win.emit('pointermove', { pointerType: 'touch', clientX: 2, clientY: 2 });
+
+  const button = {
+    isConnected: true,
+    matches: () => false,
+    getBoundingClientRect: () => ({ left: 100, top: 20, width: 80, height: 32 })
+  };
+  const buttonChild = { closest: selector => selector.includes('a[href]') ? button : null };
+  win.emit('pointermove', { pointerType: 'mouse', clientX: 112, clientY: 28, target: buttonChild });
+  drainFrames();
+  assert.equal(element.dataset.state, 'pointer');
+  assert.equal(element.style['--cursor-width'], '90px');
+  assert.equal(element.style['--cursor-height'], '40px');
+  assert.match(element.style.transform, /140\.00px, 36\.00px/);
+  win.emit('pointerdown', { pointerType: 'mouse' });
+  assert.equal(element.dataset.pressed, 'true');
+  drainFrames();
+  win.emit('pointerup', { pointerType: 'mouse' });
+  drainFrames();
+  assert.equal(element.dataset.pressed, 'false');
+
+  const paragraph = {};
+  const textTarget = { closest: selector => selector.includes('a[href]') ? null : paragraph };
+  win.emit('pointermove', { pointerType: 'mouse', clientX: 50, clientY: 60, target: textTarget });
+  drainFrames();
+  assert.equal(element.dataset.state, 'text');
+  assert.equal(element.style['--cursor-width'], '3px');
+
+  win.emit('pointermove', { pointerType: 'touch', clientX: 2, clientY: 2, target: plainTarget });
   assert.equal(frames.size, 0);
-  win.emit('pointermove', { pointerType: 'mouse', clientX: 3, clientY: 3 });
+  win.emit('pointermove', { pointerType: 'mouse', clientX: 3, clientY: 3, target: plainTarget });
   doc.hidden = true; doc.emit('visibilitychange');
   assert.equal(frames.size, 0);
   assert.equal(element.style.opacity, '0');
   media.matches = false; media.emit('change');
   assert.equal(win.count('pointermove'), 0);
+  assert.equal(win.count('pointerdown'), 0);
+  assert.equal(rootClasses.has('has-custom-cursor'), false);
   cleanup();
   assert.equal(media.count('change'), 0);
   assert.equal(doc.count('visibilitychange'), 0);
