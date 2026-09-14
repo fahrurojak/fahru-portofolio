@@ -43,8 +43,13 @@ test('cursor batches movement and removes work on touch, tab hiding and unmount'
   Cursor(); const cleanup = effect();
   for (let i = 0; i < 100; i++) win.emit('pointermove', { pointerType: 'mouse', clientX: i, clientY: i });
   assert.equal(frames.size, 1);
-  const paint = [...frames.values()][0]; frames.clear(); paint();
-  assert.match(element.style.transform, /99px, 99px/);
+  let now = 0;
+  for (let step = 0; step < 80 && frames.size; step++) {
+    const paints = [...frames.values()]; frames.clear(); now += 16.667;
+    for (const paint of paints) paint(now);
+  }
+  assert.equal(frames.size, 0);
+  assert.match(element.style.transform, /99\.00px, 99\.00px/);
   win.emit('pointermove', { pointerType: 'touch', clientX: 2, clientY: 2 });
   assert.equal(frames.size, 0);
   win.emit('pointermove', { pointerType: 'mouse', clientX: 3, clientY: 3 });
@@ -100,48 +105,4 @@ test('optimized model keeps geometry bytes and accessors identical', () => {
   assert.deepEqual(after.binary, before.binary.subarray(0, after.binary.length));
   assert.equal(after.json.images, undefined);
   assert.ok(after.binary.length < before.binary.length * 0.1);
-});
-
-test('Duo Fold remaps sensors for every screen orientation', async () => {
-  const { remapOrientation } = await import('../src/common/DuoFold/motion.js');
-  assert.deepEqual(remapOrientation(10, 20, 0), { x: 20, y: 10 });
-  assert.deepEqual(remapOrientation(10, 20, 90), { x: 10, y: -20 });
-  assert.deepEqual(remapOrientation(10, 20, 180), { x: -20, y: -10 });
-  assert.deepEqual(remapOrientation(10, 20, 270), { x: -10, y: 20 });
-});
-
-test('Duo Fold pointer and presentation values stay bounded', async () => {
-  const {
-    MAX_TILT,
-    foldPresentation,
-    pointerTilt,
-    predictTilt,
-    renderingQuality,
-    shortestAngleDelta,
-    stabilizeTilt
-  } = await import('../src/common/DuoFold/motion.js');
-  const tilt = pointerTilt(390, 0, 390, 844);
-  assert.equal(tilt.x, 24);
-  assert.equal(tilt.y, 18);
-  assert.equal(pointerTilt(10_000, -10_000, 390, 844).x, MAX_TILT);
-  const folded = foldPresentation(MAX_TILT, MAX_TILT);
-  assert.equal(folded.amount, 1);
-  assert.equal(folded.soft, 1);
-  assert.equal(folded.medium, 1);
-  assert.equal(folded.strong, 1);
-  assert.deepEqual(foldPresentation(0, 0), {
-    amount: 0,
-    direction: -90,
-    soft: 0,
-    medium: 0,
-    strong: 0
-  });
-  assert.equal(shortestAngleDelta(-179, 179), 2);
-  assert.equal(shortestAngleDelta(179, -179), -2);
-  assert.equal(predictTilt(44, 100), MAX_TILT);
-  assert.equal(stabilizeTilt(0.8), 0);
-  assert.ok(stabilizeTilt(10) > 0);
-  assert.equal(renderingQuality({ deviceMemory: 2, hardwareConcurrency: 8 }), 'lite');
-  assert.equal(renderingQuality({ deviceMemory: 8, hardwareConcurrency: 8, coarsePointer: true }), 'balanced');
-  assert.equal(renderingQuality({ deviceMemory: 8, hardwareConcurrency: 8 }), 'high');
 });

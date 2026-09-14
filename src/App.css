@@ -39,6 +39,7 @@ body {
   z-index: 9999;
   opacity: 0;
   will-change: transform;
+  transition: opacity 0.14s ease-out;
 }
 [data-theme='dark'] .custom-cursor { border-color: #bdd9ee80; }
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {

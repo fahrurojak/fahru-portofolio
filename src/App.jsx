@@ -6,7 +6,6 @@ import Hero from './sections/Hero/Hero';
 import NavigationBar from './common/NavigationBar/NavigationBar';
 import LiquidBackground from './common/LiquidBackground/LiquidBackground';
 import Experience from './sections/Experience/Experience';
-import DuoFold from './common/DuoFold/DuoFold';
 
 import CustomCursor from './common/CustomCursor';
 
@@ -46,7 +45,7 @@ function App() {
   };
 
   return (
-    <DuoFold>
+    <>
       <CustomCursor />
       <LiquidBackground />
       <NavigationBar activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -57,14 +56,17 @@ function App() {
             initial={reducedMotion ? false : { opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reducedMotion ? { opacity: 1 } : { opacity: 0, y: -15 }}
-            transition={{ duration: reducedMotion ? 0 : 0.2 }}
+            transition={{
+              duration: reducedMotion ? 0 : 0.28,
+              ease: [0.22, 1, 0.36, 1]
+            }}
           >
             <Suspense fallback={<div className="section-loading" role="status">Loading...</div>}>{renderContent()}</Suspense>
             {activeTab === 'contact' && <Footer />}
           </motion.div>
         </AnimatePresence>
       </div>
-    </DuoFold>
+    </>
   );
 }
 
